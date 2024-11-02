@@ -1,101 +1,96 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import { Checkbox } from "@/components/ui/checkbox"
+import { Card, CardContent } from "@/components/ui/card"
+import Link from 'next/link'
+import { Music2, Brain, Rocket, Bike, Heart, Spade, Users } from 'lucide-react'
+// TruthOrDare,
+
+interface Category {
+  id: string
+  label: string
+}
+
+interface Page {
+  id: string
+  title: string
+  icon: React.ReactNode
+  categories: string[]
+  href: string
+}
+
+const categories: Category[] = [
+  { id: 'fun', label: 'Fun' },
+  { id: 'dating', label: 'Dating' },
+  { id: 'realWorld', label: 'Real World' },
+  { id: 'videoChat', label: 'Video Chat' },
+]
+
+const pages: Page[] = [
+  { id: 'truth-or-lai', title: 'Truth or l-AI', icon: <Brain className="h-8 w-8" />, categories: ['fun', 'videoChat'], href: '/truth-or-lai' },
+  { id: 'fusion-tunes', title: 'Fusion Tunes', icon: <Music2 className="h-8 w-8" />, categories: ['fun', 'videoChat'], href: '/fusion-tunes' },
+  { id: 'startup-roulette', title: 'Startup Roulette', icon: <Rocket className="h-8 w-8" />, categories: ['videoChat'], href: '/startup-roulette' },
+  { id: 'poker-stream', title: 'Poker Stream', icon: <Spade className="h-8 w-8" />, categories: ['fun', 'videoChat'], href: '/poker-stream' },
+  { id: 'strava-pvp', title: 'Strava PVP', icon: <Bike className="h-8 w-8" />, categories: ['fun'], href: '/strava-pvp' },
+  { id: 'love-actually', title: 'Love, Actually', icon: <Heart className="h-8 w-8" />, categories: ['dating'], href: '/love-actually' },
+  { id: 'cofounder-match', title: 'Cofounder Match', icon: <Users className="h-8 w-8" />, categories: ['dating', 'realWorld'], href: '/cofounder-match' },
+]
+
+export default function LandingPage() {
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    )
+  }
+
+  const filteredPages = selectedCategories.length === 0
+    ? pages
+    : pages.filter(page => page.categories.some(cat => selectedCategories.includes(cat)))
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-background text-foreground">
+      <main className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">Welcome to Our Platform</h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="mb-8">
+          <h2 className="text-xl font-semibold mb-4">Filter by Category:</h2>
+          <div className="flex flex-wrap gap-4">
+            {categories.map(category => (
+              <div key={category.id} className="flex items-center space-x-2">
+                <Checkbox
+                  id={category.id}
+                  checked={selectedCategories.includes(category.id)}
+                  onCheckedChange={() => handleCategoryChange(category.id)}
+                />
+                <label
+                  htmlFor={category.id}
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  {category.label}
+                </label>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {filteredPages.map(page => (
+            <Link key={page.id} href={page.href}>
+              <Card className="hover:shadow-lg transition-shadow">
+                <CardContent className="flex flex-col items-center justify-center p-6">
+                  {page.icon}
+                  <h3 className="mt-4 text-lg font-semibold text-center">{page.title}</h3>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }

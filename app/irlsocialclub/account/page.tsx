@@ -8,6 +8,45 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Check, X } from 'lucide-react'
 
 export default function Component() {
+    const addItemToDynamo = async () => {
+        const tableName = "socialverse_users";
+        const response = await fetch("/api/addItem", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "tableName": tableName, "content": { "did": "abcd-efgh", "name": "Test Item" } }),
+        });
+        const result = await response.json();
+        console.log("Add item result:", result);
+    };
+
+    const getItemFromDynamo = async () => {
+        const tableName = "socialverse_users";
+        const response = await fetch("/api/getItem", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "tableName": tableName, "key": { "did": "abcd-efgh" } }), // Adjust key structure to match your DynamoDB table
+        });
+        const result = await response.json();
+        console.log("Get item result:", result);
+    };
+
+    const getAllItemsFromDynamo = async () => {
+        const tableName = "socialverse_users";
+        const response = await fetch("/api/getAllItems", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ "tableName": tableName }),
+        });
+        const result = await response.json();
+        console.log("Get all items result:", result);
+    };
+
+
+
     // Simulated data upload status
     const [dataStatus, setDataStatus] = useState({
         strava: false,
@@ -80,6 +119,9 @@ export default function Component() {
                         ))}
                     </CardContent>
                 </Card>
+                <Button onClick={addItemToDynamo}>Add Item</Button>
+                <Button onClick={getItemFromDynamo}>Get Item</Button>
+                <Button onClick={getAllItemsFromDynamo}>Get All Items</Button>
             </div>
         </div>
     )

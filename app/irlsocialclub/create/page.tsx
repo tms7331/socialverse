@@ -13,11 +13,26 @@ export default function CreateEvent() {
     const [date, setDate] = useState('')
     const [time, setTime] = useState('')
 
+    const addEventToDynamo = async () => {
+        const tableName = "irlsc_events";
+        const eventId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        const response = await fetch("/api/addItem", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ "tableName": tableName, "content": { "eventId": eventId, "title": title, "description": description, "date": date, "time": time } }),
+        });
+        const result = await response.json();
+        console.log("Add item result:", result);
+    };
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         // Here you would typically handle the form submission,
         // such as sending the data to an API
         console.log({ title, description, date, time })
+        addEventToDynamo();
     }
 
     return (

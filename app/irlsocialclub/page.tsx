@@ -13,41 +13,6 @@ import Link from "next/link"
 export default function LandingPage() {
     return (
         <div className="min-h-screen bg-gray-50 flex flex-col">
-            <nav className="bg-white shadow-sm">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex-shrink-0 flex items-center">
-                            <Link href="/" className="text-xl font-bold text-gray-800">
-                                IRL Social Club
-                            </Link>
-                        </div>
-                        <div className="flex items-center">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" aria-label="Open menu">
-                                        <Menu className="h-6 w-6" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem asChild>
-                                        <Link href="/account" className="w-full">Account</Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
-                                        <Link href="/explore" className="w-full">Explore</Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
-                                        <Link href="/curated" className="w-full">Curated</Link>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem asChild>
-                                        <Link href="/my-events" className="w-full">My Events</Link>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-
             <main className="flex-grow flex items-center">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 flex flex-col md:flex-row items-center">
                     <div className="md:w-1/2 md:pr-8 mb-8 md:mb-0">

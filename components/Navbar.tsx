@@ -10,7 +10,10 @@ const Navbar: React.FC = () => {
         <nav>
             <h1>Your App</h1>
             {session ? (
-                <p>Welcome, {session.user?.name}</p>
+                <div>
+                    <p>Welcome, {session.user?.name}</p>
+                    <p>Your Google ID: {session.googleId}</p>
+                </div>
             ) : (
                 <p>Please log in to see your profile information</p>
             )}

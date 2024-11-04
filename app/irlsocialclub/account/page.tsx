@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Check, X } from 'lucide-react'
+import LoginButton from "@/components/LoginButton";
+
 
 export default function Component() {
     const addItemToDynamo = async () => {
@@ -122,6 +124,7 @@ export default function Component() {
                 <Button onClick={addItemToDynamo}>Add Item</Button>
                 <Button onClick={getItemFromDynamo}>Get Item</Button>
                 <Button onClick={getAllItemsFromDynamo}>Get All Items</Button>
+                <LoginButton />
             </div>
         </div>
     )

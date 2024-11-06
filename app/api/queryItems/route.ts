@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 import { queryItems } from "../../../lib/dynamoHelpers";
 
 export async function POST(request: Request) {
-    const { partitionKey, partitionValue, sortKey, sortValue, indexName } = await request.json();
+    const { tableName, partitionKey, partitionValue, sortKey, sortValue, indexName } = await request.json();
 
     const result = await queryItems({
-        tableName: "YourTableName",
+        tableName: tableName,
         partitionKey,
         partitionValue,
         sortKey,

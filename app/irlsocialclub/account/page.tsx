@@ -8,14 +8,29 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Check, X } from 'lucide-react'
 import LoginButton from "@/components/LoginButton";
 import Link from 'next/link';
+import { useSession } from 'next-auth/react'
+
+
+const writeAccount = async (did: string, name: string, email: string) => {
+    const tableName = "socialverse_users";
+    const response = await fetch("/api/addItem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "tableName": tableName, "content": { "did": did, "name": name, "email": email } }),
+    });
+    const result = await response.json();
+    console.log("Add item result:", result);
+};
 
 
 export default function Component() {
+    const { data: session } = useSession();
     const dataSources = ["strava", "identity", "spotify", "twitter", "instagram", "linkedin"]
 
     // Simulated data upload status
     const [dataStatus, setDataStatus] = useState(dataSources.map(source => ({ [source]: false })))
-
 
     const addItemToDynamo = async () => {
         const tableName = "socialverse_users";
@@ -55,11 +70,13 @@ export default function Component() {
     };
 
 
+
     const fetchExistingProofs = async () => {
         // socialverse_data : "did", "dataTag"
         const tableName = "socialverse_data";
+        const did = session?.googleId;
         // did and dataTag for EACH of the keys
-        const keys = dataSources.map(source => ({ did: "abcd-efgh", dataTag: source }))
+        const keys = dataSources.map(source => ({ did: did, dataTag: source }))
         const response = await fetch("/api/batchGetItems", {
             method: "POST",
             headers: {
@@ -82,7 +99,13 @@ export default function Component() {
         fetchExistingProofs();
     }, []);
 
-
+    useEffect(() => {
+        // If session changes - create a new account?  Ugly but should work?
+        if (session) {
+            console.log("Session changed:", session);
+            writeAccount(session.googleId as string, session.user?.name as string, session.user?.email as string);
+        }
+    }, [session]);
 
 
     const DataSourceButton = ({ name, uploaded }: { name: string, uploaded: boolean }) => (

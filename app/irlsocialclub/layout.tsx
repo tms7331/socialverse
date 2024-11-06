@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // import type { AppProps } from "next/app";
-// import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster"
 import AuthProvider from "@/components/AuthProvider";
 import Navbar from "@/components/Navbar";

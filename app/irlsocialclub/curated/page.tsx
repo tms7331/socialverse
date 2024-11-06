@@ -1,4 +1,5 @@
 "use client"
+
 import { useState } from 'react'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Textarea } from "@/components/ui/textarea"
@@ -7,6 +8,8 @@ import { Button } from "@/components/ui/button"
 export default function Component() {
     const [availability, setAvailability] = useState('')
     const [selectedActivities, setSelectedActivities] = useState<string[]>([])
+    const [selectedMeetingPreferences, setSelectedMeetingPreferences] = useState<string[]>([])
+    const [isSubmitted, setIsSubmitted] = useState(false)
 
     const activities = [
         { id: 'dinners', label: 'Dinners' },
@@ -27,9 +30,21 @@ export default function Component() {
         },
     ]
 
+    const meetingPreferences = [
+        { id: 'fun-evening', label: 'Fun evening' },
+        { id: 'make-new-friends', label: 'Make new friends' },
+        { id: 'professional-networking', label: 'Professional networking' },
+    ]
+
     const handleActivityChange = (activityId: string, checked: boolean) => {
         setSelectedActivities(prev =>
             checked ? [...prev, activityId] : prev.filter(id => id !== activityId)
+        )
+    }
+
+    const handleMeetingPreferenceChange = (preferenceId: string, checked: boolean) => {
+        setSelectedMeetingPreferences(prev =>
+            checked ? [...prev, preferenceId] : prev.filter(id => id !== preferenceId)
         )
     }
 
@@ -37,12 +52,26 @@ export default function Component() {
         event.preventDefault()
         console.log('Availability:', availability)
         console.log('Selected Activities:', selectedActivities)
+        console.log('Meeting Preferences:', selectedMeetingPreferences)
         // Handle form submission here
+        setIsSubmitted(true)
+    }
+
+    if (isSubmitted) {
+        return (
+            <div className="container mx-auto p-4 text-center">
+                <h1 className="text-2xl font-bold mb-4">Thank you!</h1>
+                <p className="text-lg">We'll be in touch!</p>
+            </div>
+        )
     }
 
     return (
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Curated</h1>
+            <p className="mb-6 text-lg">
+                Sign up to join a curated event! Describe what you're looking for and we'll do the rest!
+            </p>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                     <label htmlFor="availability" className="block text-sm font-medium mb-2">
@@ -97,6 +126,26 @@ export default function Component() {
                                         ))}
                                     </div>
                                 )}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <h2 className="text-lg font-semibold mb-2">What are you hoping to get out of this event?</h2>
+                    <div className="space-y-2">
+                        {meetingPreferences.map((preference) => (
+                            <div key={preference.id} className="flex items-center space-x-2">
+                                <Checkbox
+                                    id={preference.id}
+                                    checked={selectedMeetingPreferences.includes(preference.id)}
+                                    onCheckedChange={(checked) => handleMeetingPreferenceChange(preference.id, checked as boolean)}
+                                />
+                                <label
+                                    htmlFor={preference.id}
+                                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                                >
+                                    {preference.label}
+                                </label>
                             </div>
                         ))}
                     </div>

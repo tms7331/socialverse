@@ -14,7 +14,6 @@ type UserProfile = {
     name: string
     image: string
     bio: string
-    commonalities: string
 }
 
 
@@ -24,21 +23,18 @@ const userProfiles: UserProfile[] = [
         name: "Alice Johnson",
         image: "/placeholder.svg?height=100&width=100",
         bio: "Passionate about sustainable technology and green energy solutions.",
-        commonalities: "You both love hiking, speak French, and follow a vegetarian diet."
     },
     {
         did: "did2",
         name: "Bob Smith",
         image: "/placeholder.svg?height=100&width=100",
         bio: "Aspiring chef with a knack for fusion cuisine and food photography.",
-        commonalities: "You share a passion for cooking, frequently travel, and are both proud dog owners."
     },
     {
         did: "did3",
         name: "Carol Martinez",
         image: "/placeholder.svg?height=100&width=100",
         bio: "Tech enthusiast working on AI-driven solutions for healthcare.",
-        commonalities: "You both enjoy sci-fi movies, play the guitar, and are early risers."
     }
 ]
 

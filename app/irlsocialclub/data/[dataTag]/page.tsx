@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { useParams } from 'next/navigation';
+import { useSession } from 'next-auth/react'
 
 export default function DataManagementClient() {
+    const { data: session } = useSession();
     const params = useParams();
     const dataTag = params.dataTag;
     console.log("Data tag:", dataTag);
@@ -15,7 +17,7 @@ export default function DataManagementClient() {
 
     const getItemFromDynamo = async () => {
         const tableName = "socialverse_data";
-        const did = "abcd-efgha";
+        const did = session?.googleId;
         const response = await fetch("/api/getItem", {
             method: "POST",
             headers: {
@@ -38,7 +40,7 @@ export default function DataManagementClient() {
 
 
     const addItemToDynamo = async () => {
-        const did = "abcd-efgh";
+        const did = session?.googleId;
         const tableName = "socialverse_data";
         const response = await fetch("/api/addItem", {
             method: "POST",

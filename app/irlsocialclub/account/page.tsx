@@ -6,76 +6,53 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Check, X } from 'lucide-react'
-import LoginButton from "@/components/LoginButton";
-import Link from 'next/link';
+import LoginButton from "@/components/LoginButton"
+import Link from 'next/link'
 import { useSession } from 'next-auth/react'
+import { Textarea } from "@/components/ui/textarea"
 
-
-const writeAccount = async (did: string, name: string, email: string) => {
+const writeAccount = async (did: string, name: string, bio: string) => {
     const tableName = "socialverse_users";
     const response = await fetch("/api/addItem", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "tableName": tableName, "content": { "did": did, "name": name, "email": email } }),
+        body: JSON.stringify({ "tableName": tableName, "content": { "did": did, "name": name, "bio": bio } }),
     });
     const result = await response.json();
     console.log("Add item result:", result);
 };
 
+const fetchAccount = async (did: string) => {
+    const tableName = "socialverse_users";
+    const response = await fetch("/api/getItem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "tableName": tableName, "key": { "did": did } }),
+    });
+    const result = await response.json();
+    console.log("Get item result:", result);
+    return result.item;
+};
 
 export default function Component() {
     const { data: session } = useSession();
-    const dataSources = ["strava", "identity", "spotify", "twitter", "instagram", "linkedin"]
+    const dataSources = ["identity", "spotify", "linkedin", "github", "yc"]
 
-    // Simulated data upload status
-    const [dataStatus, setDataStatus] = useState(dataSources.map(source => ({ [source]: false })))
+    const [dataStatus, setDataStatus] = useState(Object.fromEntries(dataSources.map(source => [source, false])))
+    const [name, setName] = useState("")
+    const [bio, setBio] = useState("")
 
-    const addItemToDynamo = async () => {
-        const tableName = "socialverse_users";
-        const response = await fetch("/api/addItem", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ "tableName": tableName, "content": { "did": "abcd-efgh", "name": "Test Item" } }),
-        });
-        const result = await response.json();
-        console.log("Add item result:", result);
-    };
-
-    const getItemFromDynamo = async () => {
-        const tableName = "socialverse_users";
-        const response = await fetch("/api/getItem", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ "tableName": tableName, "key": { "did": "abcd-efgh" } }), // Adjust key structure to match your DynamoDB table
-        });
-        const result = await response.json();
-        console.log("Get item result:", result);
-    };
-
-    const getAllItemsFromDynamo = async () => {
-        const tableName = "socialverse_users";
-        const response = await fetch("/api/getAllItems", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ "tableName": tableName }),
-        });
-        const result = await response.json();
-        console.log("Get all items result:", result);
-    };
-
-
+    useEffect(() => {
+        console.log("Data status:", dataStatus);
+    }, [dataStatus]);
 
     const fetchExistingProofs = async () => {
-        // socialverse_data : "did", "dataTag"
         const tableName = "socialverse_data";
         const did = session?.googleId;
-        // did and dataTag for EACH of the keys
         const keys = dataSources.map(source => ({ did: did, dataTag: source }))
         const response = await fetch("/api/batchGetItems", {
             method: "POST",
@@ -90,7 +67,10 @@ export default function Component() {
 
         const result = await response.json();
         if (result.items) {
-            setDataStatus(result.items.map(item => ({ [item.dataTag]: item.uploaded })))
+            console.log("Bulk queried proof items:", result.items);
+            const dataTags = new Set(result.items.map((item: any) => item.dataTag));
+            console.log("Data tags:", dataTags);
+            setDataStatus(Object.fromEntries(dataSources.map(source => [source, dataTags.has(source)])));
         }
         console.log("Bulk queried items:", result);
     };
@@ -100,13 +80,21 @@ export default function Component() {
     }, []);
 
     useEffect(() => {
-        // If session changes - create a new account?  Ugly but should work?
-        if (session) {
-            console.log("Session changed:", session);
-            writeAccount(session.googleId as string, session.user?.name as string, session.user?.email as string);
-        }
-    }, [session]);
+        const initializeAccount = async () => {
+            if (session) {
+                console.log("Session changed:", session);
+                const existingAccount = await fetchAccount(session.googleId as string);
+                if (!existingAccount) {
+                    writeAccount(session.googleId as string, session.user?.name as string, "");
+                } else {
+                    setName(existingAccount.name || "")
+                    setBio(existingAccount.bio || "")
+                }
+            }
+        };
 
+        initializeAccount();
+    }, [session]);
 
     const DataSourceButton = ({ name, uploaded }: { name: string, uploaded: boolean }) => (
         <Button
@@ -118,6 +106,13 @@ export default function Component() {
             {uploaded ? <Check className="h-4 w-4 text-green-500" /> : <X className="h-4 w-4 text-red-500" />}
         </Button>
     )
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        if (session?.googleId) {
+            await writeAccount(session.googleId, name, bio)
+        }
+    }
 
     return (
         <div className="container mx-auto p-6 space-y-8">
@@ -136,23 +131,29 @@ export default function Component() {
                                 <span className="w-full border-t" />
                             </div>
                             <div className="relative flex justify-center text-xs uppercase">
-                                <span className="bg-background px-2 text-muted-foreground">Or</span>
+                                <span className="bg-background px-2 text-muted-foreground">About Me</span>
                             </div>
                         </div>
-                        <form className="space-y-4">
+                        <form className="space-y-4" onSubmit={handleSubmit}>
                             <div className="space-y-2">
                                 <Label htmlFor="name">Name</Label>
-                                <Input id="name" placeholder="Enter your name" />
+                                <Input
+                                    id="name"
+                                    placeholder="Enter your name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" placeholder="Enter your email" />
+                                <Label htmlFor="bio">Bio</Label>
+                                <Textarea
+                                    id="bio"
+                                    placeholder="Tell us about yourself"
+                                    value={bio}
+                                    onChange={(e) => setBio(e.target.value)}
+                                />
                             </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="password">Password</Label>
-                                <Input id="password" type="password" placeholder="Create a password" />
-                            </div>
-                            <Button type="submit" className="w-full">Create Account</Button>
+                            <Button type="submit" className="w-full">Update</Button>
                         </form>
                     </CardContent>
                 </Card>
@@ -169,6 +170,6 @@ export default function Component() {
                     </CardContent>
                 </Card>
             </div>
-        </div >
+        </div>
     )
 }

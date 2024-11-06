@@ -1,15 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Check, X } from 'lucide-react'
 import LoginButton from "@/components/LoginButton";
+import Link from 'next/link';
 
 
 export default function Component() {
+    const dataSources = ["strava", "identity", "spotify", "twitter", "instagram", "linkedin"]
+
+    // Simulated data upload status
+    const [dataStatus, setDataStatus] = useState(dataSources.map(source => ({ [source]: false })))
+
+
     const addItemToDynamo = async () => {
         const tableName = "socialverse_users";
         const response = await fetch("/api/addItem", {
@@ -48,18 +55,37 @@ export default function Component() {
     };
 
 
+    const fetchExistingProofs = async () => {
+        // socialverse_data : "did", "dataTag"
+        const tableName = "socialverse_data";
+        // did and dataTag for EACH of the keys
+        const keys = dataSources.map(source => ({ did: "abcd-efgh", dataTag: source }))
+        const response = await fetch("/api/batchGetItems", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                tableName: tableName,
+                keys: keys,
+            }),
+        });
 
-    // Simulated data upload status
-    const [dataStatus, setDataStatus] = useState({
-        strava: false,
-        identity: true,
-        spotify: true,
-        twitter: false,
-        instagram: true,
-        linkedin: false
-    })
+        const result = await response.json();
+        if (result.items) {
+            setDataStatus(result.items.map(item => ({ [item.dataTag]: item.uploaded })))
+        }
+        console.log("Bulk queried items:", result);
+    };
 
-    const DataSourceButton = ({ name, uploaded }) => (
+    useEffect(() => {
+        fetchExistingProofs();
+    }, []);
+
+
+
+
+    const DataSourceButton = ({ name, uploaded }: { name: string, uploaded: boolean }) => (
         <Button
             variant="outline"
             className="w-full justify-between"
@@ -81,9 +107,7 @@ export default function Component() {
                         <CardDescription>Sign in or create a new account</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                        <Button className="w-full" variant="outline">
-                            Sign in with Google
-                        </Button>
+                        <LoginButton />
                         <div className="relative">
                             <div className="absolute inset-0 flex items-center">
                                 <span className="w-full border-t" />
@@ -117,15 +141,11 @@ export default function Component() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         {Object.entries(dataStatus).map(([source, status]) => (
-                            <DataSourceButton key={source} name={source.charAt(0).toUpperCase() + source.slice(1)} uploaded={status} />
+                            <Link href={`/irlsocialclub/data/${source}`} key={source}><DataSourceButton key={source} name={source.charAt(0).toUpperCase() + source.slice(1)} uploaded={status} /></Link>
                         ))}
                     </CardContent>
                 </Card>
-                <Button onClick={addItemToDynamo}>Add Item</Button>
-                <Button onClick={getItemFromDynamo}>Get Item</Button>
-                <Button onClick={getAllItemsFromDynamo}>Get All Items</Button>
-                <LoginButton />
             </div>
-        </div>
+        </div >
     )
 }

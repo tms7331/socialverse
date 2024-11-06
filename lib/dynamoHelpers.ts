@@ -1,9 +1,19 @@
 import dynamoDb from "./dynamo";
-import { PutCommand, GetCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
+import { PutCommand, GetCommand, ScanCommand, QueryCommand, BatchGetCommand } from "@aws-sdk/lib-dynamodb";
+
 
 // Define the item structure
 interface DynamoDBItem {
     [key: string]: any;
+}
+
+interface QueryParams {
+    tableName: string;
+    partitionKey: string;
+    partitionValue: any;
+    sortKey?: string;
+    sortValue?: any;
+    indexName?: string; // Optional index name for secondary index
 }
 
 // Function to add an item to DynamoDB
@@ -46,6 +56,66 @@ export const getAllItems = async (tableName: string) => {
         return { success: true, items: result.Items };
     } catch (error) {
         console.error("Error scanning table:", error);
+        return { success: false, error };
+    }
+};
+
+
+
+export const queryItems = async ({
+    tableName,
+    partitionKey,
+    partitionValue,
+    sortKey,
+    sortValue,
+    indexName,
+}: QueryParams) => {
+    try {
+        const keyConditionExpression = sortKey
+            ? `${partitionKey} = :partitionValue AND ${sortKey} = :sortValue`
+            : `${partitionKey} = :partitionValue`;
+
+        const expressionAttributeValues = {
+            ":partitionValue": partitionValue,
+            ...(sortKey && { ":sortValue": sortValue }),
+        };
+
+        const command = new QueryCommand({
+            TableName: tableName,
+            IndexName: indexName, // Add index name if provided
+            KeyConditionExpression: keyConditionExpression,
+            ExpressionAttributeValues: expressionAttributeValues,
+        });
+
+        const result = await dynamoDb.send(command);
+        return { success: true, items: result.Items };
+    } catch (error) {
+        console.error("Error querying items:", error);
+        return { success: false, error };
+    }
+};
+
+
+
+interface BatchGetParams {
+    tableName: string;
+    keys: Array<{ [key: string]: any }>; // Array of keys to retrieve items by
+}
+
+export const batchGetItems = async ({ tableName, keys }: BatchGetParams) => {
+    try {
+        const command = new BatchGetCommand({
+            RequestItems: {
+                [tableName]: {
+                    Keys: keys,
+                },
+            },
+        });
+
+        const result = await dynamoDb.send(command);
+        return { success: true, items: result.Responses?.[tableName] || [] };
+    } catch (error) {
+        console.error("Error in batch get items:", error);
         return { success: false, error };
     }
 };

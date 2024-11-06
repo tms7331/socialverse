@@ -69,6 +69,9 @@ const Navbar: React.FC = () => {
                                 <Link href="/irlsocialclub/curated" className="w-full">Curated</Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
+                                <Link href="/irlsocialclub/create" className="w-full">Create</Link>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem asChild>
                                 <Link href="/irlsocialclub/myevents" className="w-full">My Events</Link>
                             </DropdownMenuItem>
                             {session && (

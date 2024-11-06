@@ -1,38 +1,58 @@
+"use client"
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { useEffect } from "react";
+import Link from "next/link";
 
-// Sample event data
-const events = [
-    {
-        id: 1,
-        title: "Community Meetup",
-        description: "Join us for our monthly community gathering to discuss local issues and initiatives.",
-        date: "2023-06-15",
-        time: "18:00",
-    },
-    {
-        id: 2,
-        title: "Tech Workshop",
-        description: "Learn the basics of web development in this hands-on workshop for beginners.",
-        date: "2023-06-20",
-        time: "14:00",
-    },
-    {
-        id: 3,
-        title: "Charity Run",
-        description: "Participate in our annual 5K run to raise funds for local charities.",
-        date: "2023-06-25",
-        time: "09:00",
-    },
-]
+
+type Event = {
+    eventId: string;
+    title: string;
+    description: string;
+    date: string;
+    time: string;
+}
 
 export default function ExplorePage() {
+    // const getAllItemsFromDynamo = async () => {
+    //     const tableName = "irlsc_events";
+    //     const response = await fetch("/api/getAllItems", {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({ "tableName": tableName }),
+    //     });
+    //     const result = await response.json();
+    //     console.log("Get all items result:", result);
+    // };
+
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            const tableName = "irlsc_events";
+            const response = await fetch("/api/getAllItems", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ "tableName": tableName }),
+            });
+            const result = await response.json();
+            console.log("Fetch events result:", result);
+            if (result.items) {
+                setEvents(result.items);
+            }
+        };
+
+        fetchEvents();
+    }, []);
+
     return (
         <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-6">Explore</h1>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {events.map((event) => (
-                    <Card key={event.id}>
+                {events.map((event: Event) => (
+                    <Card key={event.eventId}>
                         <CardHeader>
                             <CardTitle>{event.title}</CardTitle>
                             <CardDescription>{`${event.date} at ${event.time}`}</CardDescription>
@@ -41,7 +61,7 @@ export default function ExplorePage() {
                             <p>{event.description}</p>
                         </CardContent>
                         <CardFooter>
-                            <Button className="w-full">Join</Button>
+                            <Link href={`/irlsocialclub/event/${event.eventId}`} className="w-full">View Details</Link>
                         </CardFooter>
                     </Card>
                 ))}

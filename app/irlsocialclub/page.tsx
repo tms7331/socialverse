@@ -2,6 +2,7 @@
 
 import { ArrowRight, Menu } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function LandingPage() {
     return (
@@ -25,8 +26,14 @@ export default function LandingPage() {
                         </div>
                     </div>
                     <div className="md:w-1/2">
-                        <div className="bg-gray-200 rounded-lg aspect-video flex items-center justify-center">
-                            <span className="text-gray-500 text-lg">Event Image Placeholder</span>
+                        <div className="relative bg-gray-200 rounded-lg aspect-video">
+                            <Image
+                                src="/irlsclanding.png"
+                                alt="People enjoying social activities"
+                                fill
+                                className="rounded-lg object-cover"
+                                priority
+                            />
                         </div>
                     </div>
                 </div>

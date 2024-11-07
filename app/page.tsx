@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { Checkbox } from "@/components/ui/checkbox"
 import { Card, CardContent } from "@/components/ui/card"
 import Link from 'next/link'
-import { Music2, Brain, Rocket, Bike, Heart, Spade, Users, MessageSquareHeart } from 'lucide-react'
-// TruthOrDare,
+import { Music2, Brain, Rocket, Bike, Heart, Spade, Users, MessageSquareHeart, Handshake, PartyPopper } from 'lucide-react'
 
 interface Category {
   id: string
@@ -29,8 +28,8 @@ const categories: Category[] = [
 ]
 
 const pages: Page[] = [
-  { id: 'foundersocialclub', title: 'Founder Social Club', icon: <Brain className="h-8 w-8" />, categories: ['realWorld'], href: '/foundersocialclub' },
-  { id: 'irlsocialclub', title: 'IRL Social Club', icon: <Brain className="h-8 w-8" />, categories: ['realWorld'], href: '/irlsocialclub' },
+  { id: 'foundersocial', title: 'Foundersocial', icon: <Handshake className="h-8 w-8" />, categories: ['realWorld'], href: '/foundersocial' },
+  { id: 'irlsocialclub', title: 'IRL Social Club', icon: <PartyPopper className="h-8 w-8" />, categories: ['realWorld'], href: '/irlsocialclub' },
   { id: 'truth-or-lai', title: 'Truth or l-AI', icon: <Brain className="h-8 w-8" />, categories: ['fun', 'videoChat'], href: '/comingsoon' },
   { id: 'fusion-tunes', title: 'Fusion Tunes', icon: <Music2 className="h-8 w-8" />, categories: ['fun', 'videoChat'], href: '/comingsoon' },
   { id: 'startup-roulette', title: 'Startup Roulette', icon: <Rocket className="h-8 w-8" />, categories: ['videoChat'], href: '/comingsoon' },

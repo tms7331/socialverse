@@ -1,25 +1,93 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/hooks/use-toast"
+import { useSession } from 'next-auth/react'
+
+
+const fetchAccount = async (did: string) => {
+    const tableName = "socialverse_users";
+    const response = await fetch("/api/getItem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "tableName": tableName, "key": { "did": did } }),
+    });
+    const result = await response.json();
+    console.log("Get item result:", result);
+    return result.item;
+};
+
+const updateDatabaseEntry = async (did: string, updates: any) => {
+    const response = await fetch("/api/updateItem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "tableName": "socialverse_users",
+            key: { did: did },
+            updates: updates,
+        }),
+    });
+
+    return await response.json();
+};
+
 
 export default function ManageAccount() {
+    const { data: session } = useSession();
     const [interests, setInterests] = useState('')
     const [startup, setStartup] = useState('')
     const [problems, setProblems] = useState('')
 
-    const handleSubmit = (e: React.FormEvent) => {
+
+    useEffect(() => {
+        const initializeAccount = async () => {
+            if (session) {
+                console.log("Session changed:", session);
+                // This should always exist?
+                const existingAccount = await fetchAccount(session.googleId as string);
+                if (existingAccount) {
+                    setInterests(existingAccount.interests || "")
+                    setStartup(existingAccount.startup || "")
+                    setProblems(existingAccount.problems || "")
+                }
+            }
+        };
+
+        initializeAccount();
+    }, [session]);
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        // Here you would typically send this data to your backend
-        console.log({ interests, startup, problems })
-        toast({
-            title: "Account updated",
-            description: "Your account information has been successfully updated.",
-        })
+
+        try {
+            const did = session?.googleId;
+            const updates = {
+                interests,
+                startup,
+                problems,
+            };
+            await updateDatabaseEntry(did as string, updates);
+
+            toast({
+                title: "Account updated",
+                description: "Your profile information has been successfully updated.",
+            });
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to update profile. Please try again.",
+                variant: "destructive",
+            });
+        }
     }
 
     return (

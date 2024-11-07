@@ -6,19 +6,20 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Check, X } from 'lucide-react'
-import LoginButton from "@/components/LoginButton"
-import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { Textarea } from "@/components/ui/textarea"
+import { toast } from "@/hooks/use-toast"
+import LoginButton from "@/components/LoginButton"
+import Link from 'next/link'
 
-const writeAccount = async (did: string, name: string, bio: string) => {
+const writeAccount = async (did: string, userName: string, bio: string) => {
     const tableName = "socialverse_users";
     const response = await fetch("/api/addItem", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ "tableName": tableName, "content": { "did": did, "name": name, "bio": bio } }),
+        body: JSON.stringify({ "tableName": tableName, "content": { "did": did, "userName": userName, "bio": bio } }),
     });
     const result = await response.json();
     console.log("Add item result:", result);
@@ -38,12 +39,29 @@ const fetchAccount = async (did: string) => {
     return result.item;
 };
 
+const updateDatabaseEntry = async (did: string, updates: any) => {
+    const response = await fetch("/api/updateItem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "tableName": "socialverse_users",
+            key: { did: did },
+            updates: updates,
+        }),
+    });
+
+    return await response.json();
+};
+
+
 export default function Component() {
     const { data: session } = useSession();
     const dataSources = ["identity", "spotify", "linkedin", "github", "yc"]
 
     const [dataStatus, setDataStatus] = useState(Object.fromEntries(dataSources.map(source => [source, false])))
-    const [name, setName] = useState("")
+    const [userName, setUserName] = useState("")
     const [bio, setBio] = useState("")
 
     useEffect(() => {
@@ -81,13 +99,13 @@ export default function Component() {
 
     useEffect(() => {
         const initializeAccount = async () => {
-            if (session) {
+            if (session?.googleId) {
                 console.log("Session changed:", session);
                 const existingAccount = await fetchAccount(session.googleId as string);
                 if (!existingAccount) {
                     writeAccount(session.googleId as string, session.user?.name as string, "");
                 } else {
-                    setName(existingAccount.name || "")
+                    setUserName(existingAccount.userName || "")
                     setBio(existingAccount.bio || "")
                 }
             }
@@ -110,7 +128,24 @@ export default function Component() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (session?.googleId) {
-            await writeAccount(session.googleId, name, bio)
+            try {
+                const did = session?.googleId;
+                const updates = {
+                    userName: userName,
+                    bio,
+                };
+                await updateDatabaseEntry(did as string, updates);
+                toast({
+                    title: "Account updated",
+                    description: "Your profile information has been successfully updated.",
+                });
+            } catch (error) {
+                toast({
+                    title: "Error",
+                    description: "Failed to update profile. Please try again.",
+                    variant: "destructive",
+                });
+            }
         }
     }
 
@@ -140,8 +175,8 @@ export default function Component() {
                                 <Input
                                     id="name"
                                     placeholder="Enter your name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    value={userName}
+                                    onChange={(e) => setUserName(e.target.value)}
                                 />
                             </div>
                             <div className="space-y-2">

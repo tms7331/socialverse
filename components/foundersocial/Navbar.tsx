@@ -60,27 +60,17 @@ const Navbar: React.FC = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                             <DropdownMenuItem asChild>
-                                <Link href="/irlsocialclub/account" className="w-full">Account</Link>
+                                <Link href="/foundersocial/account" className="w-full">Account</Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Link href="/irlsocialclub/explore" className="w-full">Explore</Link>
+                                <Link href="/foundersocial/explore" className="w-full">Explore</Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Link href="/irlsocialclub/curated" className="w-full">Curated</Link>
+                                <Link href="/foundersocial/create" className="w-full">Create</Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Link href="/irlsocialclub/create" className="w-full">Create</Link>
+                                <Link href="/foundersocial/myevents" className="w-full">My Events</Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link href="/irlsocialclub/myevents" className="w-full">My Events</Link>
-                            </DropdownMenuItem>
-                            {session && (
-                                <DropdownMenuItem>
-                                    <span className="w-full text-xs text-muted-foreground">
-                                        Google ID: {session.googleId}
-                                    </span>
-                                </DropdownMenuItem>
-                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

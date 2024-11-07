@@ -74,13 +74,6 @@ const Navbar: React.FC = () => {
                             <DropdownMenuItem asChild>
                                 <Link href="/irlsocialclub/myevents" className="w-full">My Events</Link>
                             </DropdownMenuItem>
-                            {session && (
-                                <DropdownMenuItem>
-                                    <span className="w-full text-xs text-muted-foreground">
-                                        Google ID: {session.googleId}
-                                    </span>
-                                </DropdownMenuItem>
-                            )}
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

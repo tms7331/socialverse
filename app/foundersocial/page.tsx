@@ -1,19 +1,46 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Button } from "@/components/ui/button"
-import Link from 'next/link'
-import { Rocket } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import { Button } from "@/components/ui/button"
+import LoginButton from "@/components/LoginButton"
+import Link from 'next/link'
+
+
+const fetchYCProof = async (did: string) => {
+    const tableName = "socialverse_data";
+    const response = await fetch("/api/getItem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "tableName": tableName, "key": { "did": did, "dataTag": "yc_founder" } }),
+    });
+    const result = await response.json();
+    console.log("Get item result:", result);
+    return result.item;
+};
+
+
 
 export default function LandingPage() {
     const { data: session } = useSession();
     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     useEffect(() => {
-        if (session) {
-            setIsLoggedIn(Boolean(session.googleId))
-        }
+        const checkYCProof = async () => {
+            if (session) {
+                const did = session.googleId;
+                const ycProof = await fetchYCProof(did as string);
+                console.log("YC Proof:", ycProof);
+                // Confirm that we have the founder proof... only have to check that one...
+                if (ycProof && ycProof.items && ycProof.items.length > 0) {
+                    setIsLoggedIn(true)
+                }
+            }
+        };
+
+        checkYCProof();
     }, [session])
 
     return (
@@ -36,12 +63,10 @@ export default function LandingPage() {
                         </Link>
                     ) : (
                         <>
-                            <Button size="lg" className="w-full sm:w-auto">
-                                Login with Google
-                            </Button>
-                            <Link href="/signup">
+                            <LoginButton />
+                            <Link href="/foundersocial/join">
                                 <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                                    Create your account
+                                    Join the Community
                                 </Button>
                             </Link>
                         </>

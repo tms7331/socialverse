@@ -6,7 +6,6 @@ import { Rocket, Menu } from 'lucide-react'
 import { useState, useEffect } from "react"
 import { useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -46,10 +45,6 @@ export default function Component() {
                     <span className="text-sm text-muted-foreground mr-2">
                         Welcome, {session.user?.name}
                     </span>
-                    <Avatar className="h-8 w-8">
-                        <AvatarImage src={session.user?.image || ""} alt={session.user?.name || ""} />
-                        <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
-                    </Avatar>
                 </>
             ) : (
                 <span className="text-sm text-muted-foreground">
@@ -68,41 +63,43 @@ export default function Component() {
                         <span className="text-xl font-bold">Foundersocial</span>
                     </Link>
                 </div>
-                {!isMobile ? (
-                    <div className="flex items-center">
-                        <UserInfo />
-                        <nav className="flex items-center space-x-4">
-                            {navItems.map((item) => (
-                                <Link key={item.href} href={item.href}>
-                                    <Button variant="ghost">{item.label}</Button>
-                                </Link>
-                            ))}
-                        </nav>
-                    </div>
-                ) : (
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                                <Menu className="h-6 w-6" />
-                                <span className="sr-only">Toggle menu</span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-56">
-                            <div className="px-2 py-1.5">
-                                <UserInfo />
-                            </div>
-                            {navItems.map((item) => (
-                                <DropdownMenuItem key={item.href} asChild>
-                                    <Link href={item.href}>
-                                        <Button variant="ghost" className="w-full justify-start">
-                                            {item.label}
-                                        </Button>
+                {session ? (
+                    !isMobile ? (
+                        <div className="flex items-center">
+                            <UserInfo />
+                            <nav className="flex items-center space-x-4">
+                                {navItems.map((item) => (
+                                    <Link key={item.href} href={item.href}>
+                                        <Button variant="ghost">{item.label}</Button>
                                     </Link>
-                                </DropdownMenuItem>
-                            ))}
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                )}
+                                ))}
+                            </nav>
+                        </div>
+                    ) : (
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon">
+                                    <Menu className="h-6 w-6" />
+                                    <span className="sr-only">Toggle menu</span>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-56">
+                                <div className="px-2 py-1.5">
+                                    <UserInfo />
+                                </div>
+                                {navItems.map((item) => (
+                                    <DropdownMenuItem key={item.href} asChild>
+                                        <Link href={item.href}>
+                                            <Button variant="ghost" className="w-full justify-start">
+                                                {item.label}
+                                            </Button>
+                                        </Link>
+                                    </DropdownMenuItem>
+                                ))}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    )
+                ) : null}
             </div>
         </header>
     )

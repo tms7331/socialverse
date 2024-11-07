@@ -22,6 +22,7 @@
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
+    "@reclaimprotocol/js-sdk": "^2.1.1",
     "@types/next-auth": "^3.13.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -30,6 +31,7 @@
     "next-auth": "^4.24.10",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "react-qr-code": "^2.0.15",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   },

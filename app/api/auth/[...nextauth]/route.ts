@@ -21,11 +21,14 @@ export const authOptions: NextAuthOptions = {
         },
         async session({ session, token }) {
             // Make the Google user ID available on the session
-            session.googleId = token.googleId;
+            session.googleId = token.googleId as string;
             return session;
         },
     },
 };
 
+// Create the NextAuth handler instance
 const handler = NextAuth(authOptions);
+
+// Export the handler as the appropriate HTTP methods
 export { handler as GET, handler as POST };

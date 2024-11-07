@@ -1,5 +1,5 @@
 import dynamoDb from "./dynamo";
-import { PutCommand, GetCommand, ScanCommand, QueryCommand, BatchGetCommand } from "@aws-sdk/lib-dynamodb";
+import { PutCommand, GetCommand, ScanCommand, QueryCommand, BatchGetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 
 
 // Define the item structure
@@ -61,7 +61,6 @@ export const getAllItems = async (tableName: string) => {
 };
 
 
-
 export const queryItems = async ({
     tableName,
     partitionKey,
@@ -96,7 +95,6 @@ export const queryItems = async ({
 };
 
 
-
 interface BatchGetParams {
     tableName: string;
     keys: Array<{ [key: string]: any }>; // Array of keys to retrieve items by
@@ -116,6 +114,43 @@ export const batchGetItems = async ({ tableName, keys }: BatchGetParams) => {
         return { success: true, items: result.Responses?.[tableName] || [] };
     } catch (error) {
         console.error("Error in batch get items:", error);
+        return { success: false, error };
+    }
+};
+
+
+interface UpdateParams {
+    tableName: string;
+    key: { [key: string]: any };  // Key to identify the item (partition key and, if applicable, sort key)
+    updates: { [field: string]: any };  // Fields and values to update
+}
+
+export const updateItem = async ({ tableName, key, updates }: UpdateParams) => {
+    try {
+        // Create UpdateExpression and ExpressionAttributeValues dynamically
+        const updateExpressionParts: string[] = [];
+        const expressionAttributeValues: { [key: string]: any } = {};
+
+        Object.keys(updates).forEach((field) => {
+            const attributeKey = `:${field}`;
+            updateExpressionParts.push(`${field} = ${attributeKey}`);
+            expressionAttributeValues[attributeKey] = updates[field];
+        });
+
+        const updateExpression = `SET ${updateExpressionParts.join(", ")}`;
+
+        const command = new UpdateCommand({
+            TableName: tableName,
+            Key: key,
+            UpdateExpression: updateExpression,
+            ExpressionAttributeValues: expressionAttributeValues,
+            ReturnValues: "ALL_NEW",  // Return the updated item
+        });
+
+        const result = await dynamoDb.send(command);
+        return { success: true, item: result.Attributes };
+    } catch (error) {
+        console.error("Error updating item:", error);
         return { success: false, error };
     }
 };

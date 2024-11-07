@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
                                 Welcome, {session.user?.name}
                             </span>
                             <Avatar>
-                                <AvatarImage src={session.user?.image} alt={session.user?.name} />
+                                <AvatarImage src={session.user?.image || ""} alt={session.user?.name || ""} />
                                 <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
                             </Avatar>
                         </>

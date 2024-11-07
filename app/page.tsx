@@ -29,6 +29,7 @@ const categories: Category[] = [
 ]
 
 const pages: Page[] = [
+  { id: 'foundersocialclub', title: 'Founder Social Club', icon: <Brain className="h-8 w-8" />, categories: ['realWorld'], href: '/foundersocialclub' },
   { id: 'irlsocialclub', title: 'IRL Social Club', icon: <Brain className="h-8 w-8" />, categories: ['realWorld'], href: '/irlsocialclub' },
   { id: 'truth-or-lai', title: 'Truth or l-AI', icon: <Brain className="h-8 w-8" />, categories: ['fun', 'videoChat'], href: '/comingsoon' },
   { id: 'fusion-tunes', title: 'Fusion Tunes', icon: <Music2 className="h-8 w-8" />, categories: ['fun', 'videoChat'], href: '/comingsoon' },

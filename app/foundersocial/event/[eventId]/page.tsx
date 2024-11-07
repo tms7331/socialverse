@@ -40,7 +40,7 @@ const userProfiles: UserProfile[] = [
 
 
 const writeJoinEvent = async (eventId: string, did: string) => {
-    const tableName = "irlsc_attendees";
+    const tableName = "fs_attendees";
     const response = await fetch("/api/addItem", {
         method: "POST",
         headers: {
@@ -60,7 +60,7 @@ const getAttendees = async (eventId: string) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            tableName: "irlsc_attendees",
+            tableName: "fs_attendees",
             partitionKey: "eventId",  // Example partition key for GSI
             partitionValue: eventId,  // Value to query by
             //indexName: "EventIdIndex",     // Secondary index name
@@ -75,7 +75,7 @@ const getAttendees = async (eventId: string) => {
 };
 
 const bulkCommonalitiesQuery = async (did: string, attendeeDids: string[]) => {
-    const tableName = "irlsc_commonalities";
+    const tableName = "fs_commonalities";
     // did and dataTag for EACH of the keys
     const keys = attendeeDids.map(source => ({ did1: did, did2: source }))
     const response = await fetch("/api/batchGetItems", {
@@ -148,7 +148,7 @@ export default function EventPage() {
     useEffect(() => {
         const fetchEventData = async () => {
             try {
-                const tableName = "irlsc_events";
+                const tableName = "fs_events";
                 const response = await fetch("/api/getItem", {
                     method: "POST",
                     headers: {

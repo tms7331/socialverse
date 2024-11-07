@@ -16,7 +16,7 @@ export default function CreateEvent() {
     const [gate, setGate] = useState({ type: 'None', operator: '=', value: '' })
 
     const addEventToDynamo = async () => {
-        const tableName = "irlsc_events";
+        const tableName = "fs_events";
         const eventId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         const response = await fetch("/api/addItem", {
             method: "POST",
@@ -31,7 +31,6 @@ export default function CreateEvent() {
                     description,
                     date,
                     time,
-                    gate: gate.type !== 'None' ? gate : null
                 }
             }),
         });
@@ -91,43 +90,6 @@ export default function CreateEvent() {
                                 value={time}
                                 onChange={(e) => setTime(e.target.value)}
                                 required
-                            />
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="gate">Gate</Label>
-                        <div className="flex space-x-2">
-                            <Select
-                                value={gate.type}
-                                onValueChange={(value) => setGate({ ...gate, type: value })}
-                            >
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Select gate type" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="None">None</SelectItem>
-                                    <SelectItem value="Github">Github</SelectItem>
-                                    <SelectItem value="YC">YC</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <Select
-                                value={gate.operator}
-                                onValueChange={(value) => setGate({ ...gate, operator: value })}
-                            >
-                                <SelectTrigger className="w-[80px]">
-                                    <SelectValue placeholder="=" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="=">=</SelectItem>
-                                    <SelectItem value="<=">{'<='}</SelectItem>
-                                    <SelectItem value=">=">{'>='}</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            <Input
-                                value={gate.value}
-                                onChange={(e) => setGate({ ...gate, value: e.target.value })}
-                                placeholder="Enter value"
-                                className="flex-grow"
                             />
                         </div>
                     </div>

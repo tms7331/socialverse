@@ -22,7 +22,7 @@ const getMyEvents = async (did: string) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            tableName: "irlsc_attendees",
+            tableName: "fs_attendees",
             partitionKey: "did",  // Example partition key for GSI
             partitionValue: did,  // Value to query by
             indexName: "did-index",     // Secondary index name
@@ -39,7 +39,7 @@ const getMyEvents = async (did: string) => {
 
 const bulkQuery = async (eventIds: string[]) => {
     console.log("Bulk querying events:", eventIds);
-    const tableName = "irlsc_events";
+    const tableName = "fs_events";
     const keys = eventIds.map(eventId => ({ eventId: eventId }))
     const response = await fetch("/api/batchGetItems", {
         method: "POST",

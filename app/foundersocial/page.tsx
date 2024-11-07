@@ -1,43 +1,51 @@
-"use client"
+'use client'
 
-import { ArrowRight, Menu } from "lucide-react"
-import Link from "next/link"
-import Image from "next/image"
+import { useState } from 'react'
+import { Button } from "@/components/ui/button"
+import Link from 'next/link'
+import { Rocket } from 'lucide-react'
 
 export default function LandingPage() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+
     return (
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-            <main className="flex-grow flex items-center">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 flex flex-col md:flex-row items-center">
-                    <div className="md:w-1/2 md:pr-8 mb-8 md:mb-0">
-                        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
-                            Connect in Real Life
-                        </h1>
-                        <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                            Founder Social Club brings people together by making it easy to find and join real-life experiences with others who share your interests. By importing data from your favorite apps, Founder Social Club matches you with curated events—like intimate dinners, scenic walks, or lively music nights—designed to connect you with like-minded people. Or, explore community-hosted events in your area, from pickleball games to cozy watch parties. Whether you're looking to meet new friends or simply find something fun to do, Founder Social Club makes discovering meaningful in-person experiences effortless.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            <Link href="/foundersocialclub/account" className="inline-flex items-center justify-center rounded-full text-lg font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-6">
-                                Join Now
+        <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white">
+
+            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-8">
+                    Welcome to Foundersocial
+                </h1>
+                <p className="text-xl text-gray-600 text-center mb-12">
+                    Welcome to Foundersocial, the exclusive community for Y Combinator founders and investors looking to connect in meaningful ways. Foundersocial isn't just another networking app – it's where genuine connections begin. Before each event, gain insight into who will be attending and discover what you share in common, making every gathering not only enjoyable but truly valuable. Dive into curated experiences designed to foster both camaraderie and collaboration. Sign up to join the club and start building relationships that go beyond the pitch.
+                </p>
+
+                <div className="flex flex-col items-center space-y-4">
+                    {isLoggedIn ? (
+                        <Link href="/events">
+                            <Button size="lg">
+                                Explore Events
+                            </Button>
+                        </Link>
+                    ) : (
+                        <>
+                            <Button size="lg" className="w-full sm:w-auto">
+                                Login with Google
+                            </Button>
+                            <Link href="/signup">
+                                <Button size="lg" variant="outline" className="w-full sm:w-auto">
+                                    Create your account
+                                </Button>
                             </Link>
-                            <Link href="/foundersocialclub/explore" className="inline-flex items-center justify-center rounded-full text-lg font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-6">
-                                Explore Events <ArrowRight className="ml-2 h-5 w-5" />
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="md:w-1/2">
-                        <div className="relative bg-gray-200 rounded-lg aspect-video">
-                            <Image
-                                src="/foundersclanding.png"
-                                alt="People enjoying social activities"
-                                fill
-                                className="rounded-lg object-cover"
-                                priority
-                            />
-                        </div>
-                    </div>
+                        </>
+                    )}
                 </div>
             </main>
+
+            <footer className="bg-gray-100 mt-12">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-500">
+                    © 2024 Foundersocial. All rights reserved.
+                </div>
+            </footer>
         </div>
     )
 }

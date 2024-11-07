@@ -2,81 +2,108 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu, User } from "lucide-react"
-import { useSession } from "next-auth/react";
-
+import { Rocket, Menu } from 'lucide-react'
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
-interface NavbarProps {
-    session?: {
-        user?: {
-            name?: string
-            image?: string
-        }
-        googleId?: string
-    }
+function useDeviceType() {
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 768);
+
+        handleResize(); // Set initial value
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return isMobile;
 }
 
-// export default function Navbar({ session }: NavbarProps = {}) {
-const Navbar: React.FC = () => {
-    const { data: session } = useSession();
+export default function Component() {
+    const { data: session } = useSession()
+    const isMobile = useDeviceType();
+
+    const navItems = [
+        { href: "/foundersocial/account", label: "Account" },
+        { href: "/foundersocial/explore", label: "Explore" },
+        { href: "/foundersocial/create", label: "Create" },
+        { href: "/foundersocial/myevents", label: "My Events" },
+    ]
+
+    const UserInfo = () => (
+        <div className="flex items-center mr-4">
+            {session ? (
+                <>
+                    <span className="text-sm text-muted-foreground mr-2">
+                        Welcome, {session.user?.name}
+                    </span>
+                    <Avatar className="h-8 w-8">
+                        <AvatarImage src={session.user?.image || ""} alt={session.user?.name || ""} />
+                        <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
+                    </Avatar>
+                </>
+            ) : (
+                <span className="text-sm text-muted-foreground">
+                    Please log in to see your profile
+                </span>
+            )}
+        </div>
+    )
 
     return (
-        <nav className="border-b">
-            <div className="flex h-16 items-center px-4">
-                <div className="flex items-center space-x-4">
-                    <Link href="/foundersocialclub" className="flex items-center space-x-2">
-                        <span className="text-xl font-bold">Founder Social Club</span>
+        <header className="bg-white shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+                <div className="flex items-center">
+                    <Rocket className="h-8 w-8 text-primary mr-2" />
+                    <Link href="/foundersocial" className="flex items-center space-x-2">
+                        <span className="text-xl font-bold">Foundersocial</span>
                     </Link>
                 </div>
-                <div className="ml-auto flex items-center space-x-4">
-                    {session ? (
-                        <>
-                            <span className="text-sm text-muted-foreground">
-                                Welcome, {session.user?.name}
-                            </span>
-                            <Avatar>
-                                <AvatarImage src={session.user?.image || ""} alt={session.user?.name || ""} />
-                                <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
-                            </Avatar>
-                        </>
-                    ) : (
-                        <span className="text-sm text-muted-foreground">
-                            Please log in to see your profile
-                        </span>
-                    )}
+                {!isMobile ? (
+                    <div className="flex items-center">
+                        <UserInfo />
+                        <nav className="flex items-center space-x-4">
+                            {navItems.map((item) => (
+                                <Link key={item.href} href={item.href}>
+                                    <Button variant="ghost">{item.label}</Button>
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
+                ) : (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" aria-label="Open menu">
+                            <Button variant="ghost" size="icon">
                                 <Menu className="h-6 w-6" />
+                                <span className="sr-only">Toggle menu</span>
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuItem asChild>
-                                <Link href="/foundersocial/account" className="w-full">Account</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link href="/foundersocial/explore" className="w-full">Explore</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link href="/foundersocial/create" className="w-full">Create</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link href="/foundersocial/myevents" className="w-full">My Events</Link>
-                            </DropdownMenuItem>
+                        <DropdownMenuContent align="end" className="w-56">
+                            <div className="px-2 py-1.5">
+                                <UserInfo />
+                            </div>
+                            {navItems.map((item) => (
+                                <DropdownMenuItem key={item.href} asChild>
+                                    <Link href={item.href}>
+                                        <Button variant="ghost" className="w-full justify-start">
+                                            {item.label}
+                                        </Button>
+                                    </Link>
+                                </DropdownMenuItem>
+                            ))}
                         </DropdownMenuContent>
                     </DropdownMenu>
-                </div>
+                )}
             </div>
-        </nav>
+        </header>
     )
 }
-
-export default Navbar;

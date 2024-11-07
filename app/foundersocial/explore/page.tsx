@@ -17,7 +17,7 @@ type Event = {
 
 export default function ExplorePage() {
     // const getAllItemsFromDynamo = async () => {
-    //     const tableName = "irlsc_events";
+    //     const tableName = "fs_events";
     //     const response = await fetch("/api/getAllItems", {
     //         method: "POST",
     //         headers: { "Content-Type": "application/json" },
@@ -31,7 +31,7 @@ export default function ExplorePage() {
 
     useEffect(() => {
         const fetchEvents = async () => {
-            const tableName = "irlsc_events";
+            const tableName = "fs_events";
             const response = await fetch("/api/getAllItems", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

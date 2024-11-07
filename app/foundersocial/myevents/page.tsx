@@ -68,9 +68,14 @@ export default function Component() {
                 const did = session.googleId as string;
                 const eventIdsResp = await getMyEvents(did);
                 const eventIds = eventIdsResp.items.map((event: any) => event.eventId);
-                const eventsResp = await bulkQuery(eventIds);
-                const events = eventsResp.items;
-                setEvents(events);
+                if (eventIds.length > 0) {
+                    const eventsResp = await bulkQuery(eventIds);
+                    const events = eventsResp.items;
+                    // Should always have some though...
+                    if (events) {
+                        setEvents(events);
+                    }
+                }
             };
             fetchEvents();
         }

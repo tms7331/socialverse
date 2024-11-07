@@ -64,10 +64,6 @@ export default function Component() {
     const [userName, setUserName] = useState("")
     const [bio, setBio] = useState("")
 
-    useEffect(() => {
-        console.log("Data status:", dataStatus);
-    }, [dataStatus]);
-
     const fetchExistingProofs = async () => {
         const tableName = "socialverse_data";
         const did = session?.googleId;

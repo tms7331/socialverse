@@ -1,12 +1,20 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { Rocket } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 export default function LandingPage() {
+    const { data: session } = useSession();
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+    useEffect(() => {
+        if (session) {
+            setIsLoggedIn(Boolean(session.googleId))
+        }
+    }, [session])
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white">
@@ -21,7 +29,7 @@ export default function LandingPage() {
 
                 <div className="flex flex-col items-center space-y-4">
                     {isLoggedIn ? (
-                        <Link href="/events">
+                        <Link href="/foundersocial/explore">
                             <Button size="lg">
                                 Explore Events
                             </Button>

@@ -61,7 +61,7 @@ export default function Component() {
         return (
             <div className="container mx-auto p-4 text-center">
                 <h1 className="text-2xl font-bold mb-4">Thank you!</h1>
-                <p className="text-lg">We'll be in touch!</p>
+                <p className="text-lg">We&apos;ll be in touch!</p>
             </div>
         )
     }
@@ -70,7 +70,7 @@ export default function Component() {
         <div className="container mx-auto p-4">
             <h1 className="text-2xl font-bold mb-4">Curated</h1>
             <p className="mb-6 text-lg">
-                Sign up to join a curated event! Describe what you're looking for and we'll do the rest!
+                Sign up to join a curated event! Describe what you&apos;re looking for and we&apos;ll do the rest!
             </p>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>

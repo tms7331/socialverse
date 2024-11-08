@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link";
 
 
 type UserProfile = {
@@ -236,7 +237,6 @@ export default function EventPage() {
                 </Button>
             )}
 
-
             <div className="container mx-auto p-4 space-y-6">
                 <h1 className="text-2xl font-bold mb-4">Attendees</h1>
                 {attendees.map((profile) => (
@@ -245,12 +245,16 @@ export default function EventPage() {
                             <div className="flex flex-col sm:flex-row">
                                 <div className="flex-1 p-6 bg-background">
                                     <div className="flex items-center space-x-4">
-                                        <Avatar className="w-16 h-16">
-                                            <AvatarImage src={profile.image} alt={profile.userName} />
-                                            <AvatarFallback>{profile.userName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                                        </Avatar>
+                                        <Link href={`/foundersocial/member/${profile.did}`} className="hover:opacity-80 transition-opacity">
+                                            <Avatar className="w-16 h-16">
+                                                <AvatarImage src={profile.image} alt={profile.userName} />
+                                                <AvatarFallback>{profile.userName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                                            </Avatar>
+                                        </Link>
                                         <div>
-                                            <h2 className="text-xl font-semibold">{profile.userName}</h2>
+                                            <Link href={`/foundersocial/member/${profile.did}`} className="hover:underline">
+                                                <h2 className="text-xl font-semibold">{profile.userName}</h2>
+                                            </Link>
                                             <p className="text-muted-foreground">{profile.bio}</p>
                                         </div>
                                     </div>

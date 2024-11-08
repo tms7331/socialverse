@@ -1,9 +1,8 @@
-'use client';
-
+'use client';;
 import { useState } from 'react';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { CheckboxText } from '@/components/ui/checkbox/text';
 
 export default function Component() {
   const [availability, setAvailability] = useState('');
@@ -80,111 +79,117 @@ export default function Component() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Curated</h1>
-      <p className="mb-6 text-lg">
-        Sign up to join a curated event! Describe what you&apos;re looking for
-        and we&apos;ll do the rest!
-      </p>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label
-            htmlFor="availability"
-            className="block text-base font-medium mb-2"
-          >
-            Describe your availability
-          </label>
-          <Textarea
-            id="availability"
-            value={availability}
-            onChange={(e) => setAvailability(e.target.value)}
-            placeholder="I'm free on weekends and after 6pm on weekdays..."
-            className="w-full"
-          />
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold mb-2">
-            Select activities that sound fun:
-          </h2>
-          <div className="space-y-4">
-            {activities.map((activity) => (
-              <div key={activity.id} className="space-y-2">
-                {activity.isCategory ? (
-                  <h3 className="text-md font-medium">{activity.label}</h3>
-                ) : (
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
+    <div className="relative container mx-auto p-4 my-12">
+      <div className="absolute inset-0 bg-background rounded-xl" />
+      <div className="relative text-black">
+        <h1 className="text-2xl font-bold mb-4">Curated</h1>
+        <p className="mb-6 text-lg">
+          Sign up to join a curated event! Describe what you&apos;re looking for
+          and we&apos;ll do the rest!
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label
+              htmlFor="availability"
+              className="block text-base font-medium mb-2"
+            >
+              Describe your availability
+            </label>
+            <Textarea
+              id="availability"
+              value={availability}
+              onChange={(e) => setAvailability(e.target.value)}
+              placeholder="I'm free on weekends and after 6pm on weekdays..."
+              className="w-full"
+            />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold mb-2">
+              Select activities that sound fun:
+            </h2>
+            <div className="space-y-6">
+              {activities.map((activity) => (
+                <div key={activity.id} className="space-y-2">
+                  {activity.isCategory ? (
+                    <h3 className="text-md font-medium">{activity.label}</h3>
+                  ) : (
+                    <CheckboxText
                       id={activity.id}
                       checked={selectedActivities.includes(activity.id)}
                       onCheckedChange={(checked) =>
                         handleActivityChange(activity.id, checked as boolean)
                       }
-                    />
-                    <label
-                      htmlFor={activity.id}
-                      className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       {activity.label}
-                    </label>
-                  </div>
-                )}
-                {activity.children && (
-                  <div className="ml-6 space-y-2">
-                    {activity.children.map((child) => (
-                      <div
-                        key={child.id}
-                        className="flex items-center space-x-2"
-                      >
-                        <Checkbox
-                          id={child.id}
-                          checked={selectedActivities.includes(child.id)}
-                          onCheckedChange={(checked) =>
-                            handleActivityChange(child.id, checked as boolean)
-                          }
-                        />
-                        <label
-                          htmlFor={child.id}
-                          className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    </CheckboxText>
+                  )}
+                  {activity.children && (
+                    <div className="space-y-2">
+                      {activity.children.map((child) => (
+                        <div
+                          key={child.id}
+                          className="flex items-center space-x-2"
                         >
-                          {child.label}
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                          <CheckboxText
+                            id={child.id}
+                            checked={selectedActivities.includes(child.id)}
+                            onCheckedChange={(checked) =>
+                              handleActivityChange(child.id, checked as boolean)
+                            }
+                          >
+                            {child.label}
+                          </CheckboxText>
+                          {/* <label
+                            htmlFor={child.id}
+                            className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          >
+                            
+                          </label> */}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div>
-          <h2 className="text-lg font-semibold mb-2">
-            What are you hoping to get out of this event?
-          </h2>
-          <div className="space-y-2">
-            {meetingPreferences.map((preference) => (
-              <div key={preference.id} className="flex items-center space-x-2">
-                <Checkbox
-                  id={preference.id}
-                  checked={selectedMeetingPreferences.includes(preference.id)}
-                  onCheckedChange={(checked) =>
-                    handleMeetingPreferenceChange(
-                      preference.id,
-                      checked as boolean
-                    )
-                  }
-                />
-                <label
-                  htmlFor={preference.id}
-                  className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          <div>
+            <h2 className="text-lg font-semibold mb-2">
+              What are you hoping to get out of this event?
+            </h2>
+            <div className="space-y-2">
+              {meetingPreferences.map((preference) => (
+                <div
+                  key={preference.id}
+                  className="flex items-center space-x-2"
                 >
-                  {preference.label}
-                </label>
-              </div>
-            ))}
+                  <CheckboxText
+                    id={preference.id}
+                    checked={selectedMeetingPreferences.includes(preference.id)}
+                    onCheckedChange={(checked) =>
+                      handleMeetingPreferenceChange(
+                        preference.id,
+                        checked as boolean
+                      )
+                    }
+                  >
+                    {preference.label}
+                  </CheckboxText>
+                  {/* <label
+                    htmlFor={preference.id}
+                    className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    
+                  </label> */}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <Button type="submit">Submit</Button>
-      </form>
+          <Button type="submit" size="lg">
+            Submit
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

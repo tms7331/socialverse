@@ -1,10 +1,9 @@
-'use client';
-
+'use client';;
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { cx } from 'class-variance-authority';
-import { GRADIENT_TEAL_YELLOW_PINK } from '@/constants/gradient/constants';
+import { CardMain } from '@/components/ui/card/main';
+import { ShellHeader } from '@/shell/header';
 // import { Facebook, Twitter, Instagram, Github } from 'lucide-react'
 
 export default function ComingSoon() {
@@ -18,32 +17,28 @@ export default function ComingSoon() {
   };
 
   return (
-    <div
-      className={cx(
-        'relative min-h-screen flex items-center justify-center p-4'
-        // 'bg-gradient-to-br from-purple-400 to-indigo-600'
-      )}
-      // style={{ backgroundImage: GRADIENT_TEAL_YELLOW_PINK }}
-    >
-      
-      <div className="text-center">
-        <h1 className="text-5xl font-bold text-white mb-4">Coming Soon</h1>
-        <p className="text-xl text-white mb-8">
-          We're working hard to bring you something amazing. Stay tuned!
-        </p>
-
-        <form onSubmit={handleSubmit} className="mb-8 flex justify-center">
-          <Input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-64 mr-2 bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder-gray-500 dark:placeholder-gray-500"
-            required
-          />
-          <Button type="submit">Notify Me</Button>
-        </form>
-      </div>
-    </div>
+    <>
+      <ShellHeader />
+      <CardMain>
+        <div className="flex flex-col gap-4 text-left p-8">
+          <h1 className="text-5xl font-bold">Coming Soon</h1>
+          <p className="text-xl">
+            We're working hard to bring you something amazing. Stay tuned!
+          </p>
+          <div className="h-2" />
+          <form onSubmit={handleSubmit} className="flex items-center gap-4">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-white placeholder-gray-500"
+              required
+            />
+            <Button type="submit">Notify Me</Button>
+          </form>
+        </div>
+      </CardMain>
+    </>
   );
 }

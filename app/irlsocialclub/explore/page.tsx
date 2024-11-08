@@ -59,21 +59,25 @@ export default function ExplorePage() {
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {events.map((event: Event) => (
           <Card key={event.eventId}>
-            <CardHeader>
-              <CardTitle>{event.title}</CardTitle>
-              <CardDescription>{`${event.date} at ${event.time}`}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p>{event.description}</p>
-            </CardContent>
-            <CardFooter>
-              <Link
-                href={`/irlsocialclub/event/${event.eventId}`}
-                className="w-full"
-              >
-                View Details
-              </Link>
-            </CardFooter>
+            <div className="flex flex-col justify-between h-full">
+              <div className="flex flex-col">
+                <CardHeader>
+                  <CardTitle>{event.title}</CardTitle>
+                  <CardDescription>{`${event.date} at ${event.time}`}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p>{event.description}</p>
+                </CardContent>
+              </div>
+              <CardFooter>
+                <Link
+                  href={`/irlsocialclub/event/${event.eventId}`}
+                  className="w-full"
+                >
+                  <Button size="lg">View Details</Button>
+                </Link>
+              </CardFooter>
+            </div>
           </Card>
         ))}
       </div>

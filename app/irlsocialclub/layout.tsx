@@ -1,7 +1,8 @@
 import { Toaster } from '@/components/ui/toaster';
 import AuthProvider from '@/components/AuthProvider';
-import Navbar from '@/components/irlsocial/Navbar';
+import Navbar from '@/app/irlsocialclub/navbar';
 import '@/css/globals.css';
+import { ShellHeader } from '@/shell/header';
 
 export default function RootLayout({
   children
@@ -10,7 +11,9 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <Navbar />
+      <ShellHeader>
+        <Navbar />
+      </ShellHeader>
       {children}
       <Toaster />
     </AuthProvider>

@@ -1,8 +1,6 @@
 'use client';
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -12,6 +10,7 @@ import {
 } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, X } from 'lucide-react';
+import { CheckboxText } from '@/components/ui/checkbox/text';
 
 export default function SettingsPage() {
   const [uploadedData, setUploadedData] = useState({
@@ -71,23 +70,28 @@ export default function SettingsPage() {
         <CardContent className="space-y-2">
           {Object.entries(filters).map(([key, value]) => (
             <div key={key} className="flex items-center space-x-2">
-              <Checkbox
+              <CheckboxText
                 id={key}
                 checked={value}
                 onCheckedChange={() =>
                   handleFilterChange(key as keyof typeof filters)
                 }
-              />
-              <label
-                htmlFor={key}
-                className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 {key === 'sameIncome'
                   ? 'Same Income'
                   : key === 'sameMusicTaste'
                     ? 'Same Music Taste'
                     : 'Same Fitness'}
-              </label>
+              </CheckboxText>
+              {/* <Checkbox
+            
+              /> */}
+              {/* <label
+                htmlFor={key}
+                className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+          
+              </label> */}
             </div>
           ))}
         </CardContent>

@@ -5,7 +5,9 @@ export const Shell: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <ShellBackground />
-      <div className="relative min-h-screen text-white">{children}</div>
+      <div className="relative min-h-screen text-white">
+        {children}
+      </div>
     </>
   );
 };

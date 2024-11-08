@@ -240,7 +240,7 @@ export default function EventPage() {
         </div>
       </div>
 
-      <div className="bg-muted p-4 rounded-lg mb-8">
+      <div className="bg-muted p-4 rounded-lg mb-8 text-black">
         <h2 className="text-lg font-semibold mb-2">Event Description</h2>
         <p>{event.description}</p>
       </div>

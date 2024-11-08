@@ -1,8 +1,8 @@
-h1 {
+h1,
+h2 {
   font-family: var(--font-title);
 }
 
-h2,
 h3,
 h4,
 h5,

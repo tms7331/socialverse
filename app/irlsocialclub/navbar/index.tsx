@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
             <span className="text-xl font-bold">IRL Social Club</span>
           </Link>
         </div>
-        <div className="ml-auto flex items-center space-x-4">
+        <div className="ml-auto flex flex-col items-center space-x-4">
           {session ? (
             <>
               <span className="text-base text-muted-foreground">

@@ -78,16 +78,7 @@ export default function LandingPage() {
               ) : (
                 <>
                   <LoginButton />
-                  <Link href="/foundersocial/join">
-                    <Button
-                      size="lg"
-                      // variant="outline"
-                      variant="outline"
-                      // className="w-full sm:w-auto"
-                    >
-                      Join the Community
-                    </Button>
-                  </Link>
+             
                 </>
               )}
             </div>

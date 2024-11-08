@@ -2,10 +2,11 @@
 import { useState } from 'react';
 import { TPages } from '@/types/pages';
 import { PAGES } from '@/constants/pages';
-import { Header } from './_header';
 import { Filters } from './_filters';
 import { Grid } from './_grid';
 import { cx } from 'class-variance-authority';
+import { ComponentsColumn } from '@/components/column';
+import { ShellHeader } from '@/shell/header';
 
 export default function LandingPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -26,27 +27,19 @@ export default function LandingPage() {
         );
 
   return (
-    <main
-      className={cx(
-        'flex flex-col items-stretch container mx-auto px-4',
-        // 'gap-10 lg:gap-4',
-        'py-12 lg:py-20'
-      )}
-    >
-      <Header />
-      <div
-         className={cx(
-          'flex flex-col items-stretch',
-          'gap-5 lg:gap-5',
-          'py-12 lg:py-14'
-        )}
+    <>
+      <ShellHeader />
+      <main
+        className={cx('flex flex-col items-stretch container mx-auto px-4')}
       >
-        <Filters
-          selectedCategories={selectedCategories}
-          onCategoryChange={handleCategoryChange}
-        />
-        <Grid filteredPages={filteredPages} />
-      </div>
-    </main>
+        <ComponentsColumn classValue={cx('gap-5 lg:gap-5')}>
+          <Filters
+            selectedCategories={selectedCategories}
+            onCategoryChange={handleCategoryChange}
+          />
+          <Grid filteredPages={filteredPages} />
+        </ComponentsColumn>
+      </main>
+    </>
   );
 }

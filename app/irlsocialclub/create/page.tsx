@@ -2,7 +2,12 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -144,8 +149,8 @@ export default function CreateEvent() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full">
-            Create Event
+          <Button type="submit" size="lg" className="w-full">
+            Submit
           </Button>
         </CardFooter>
       </form>

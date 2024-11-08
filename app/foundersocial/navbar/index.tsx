@@ -10,7 +10,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { cx } from 'class-variance-authority';
+import { HEADER_LOGO_SIZE } from '@/shell/header';
+import { usePathname } from 'next/navigation';
 
 function useDeviceType() {
   const [isMobile, setIsMobile] = useState(false);
@@ -29,6 +30,7 @@ function useDeviceType() {
 export default function Component() {
   const { data: session } = useSession();
   const isMobile = useDeviceType();
+  const pathname = usePathname();
 
   const navItems = [
     { href: '/foundersocial/account', label: 'Account' },
@@ -36,6 +38,7 @@ export default function Component() {
     { href: '/foundersocial/create', label: 'Create' },
     { href: '/foundersocial/myevents', label: 'My Events' }
   ];
+  console.log(pathname);
 
   const UserInfo = () => (
     <div className="flex items-center mr-4">
@@ -54,31 +57,31 @@ export default function Component() {
   );
 
   return (
-    <header
-      className={
-        cx('text-white')
-        //'bg-white shadow-sm'
-      }
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center">
-          <Link href="/foundersocial" className="flex items-center space-x-2">
-            <Rocket className="h-6 w-6 mr-2" />
-            <span className="text-xl font-bold">Foundersocial</span>
-          </Link>
-        </div>
+    <div className="flex flex-row items-start gap-4 grow">
+      <div
+        className="flex items-center justify-between gap-4 text-white"
+        style={{ height: HEADER_LOGO_SIZE }}
+      >
+        <div>{'>'}</div>
+        <Link href="/foundersocial" className="flex items-center gap-2">
+          <Rocket />
+          <h2 className="text-2xl">Foundersocial</h2>
+        </Link>
+      </div>
+      <div className="flex flex-col items-end grow gap-4">
         {session ? (
           !isMobile ? (
-            <div className="flex items-center">
-              <UserInfo />
-              <nav className="flex items-center space-x-4">
-                {navItems.map((item) => (
-                  <Link key={item.href} href={item.href}>
-                    <Button variant="ghost">{item.label}</Button>
-                  </Link>
-                ))}
-              </nav>
-            </div>
+            <nav className="flex items-center space-x-4">
+              {navItems.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  <Button
+                    variant={pathname === item.href ? 'default' : 'ghost'}
+                  >
+                    {item.label}
+                  </Button>
+                </Link>
+              ))}
+            </nav>
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -104,7 +107,9 @@ export default function Component() {
             </DropdownMenu>
           )
         ) : null}
+
+        <UserInfo />
       </div>
-    </header>
+    </div>
   );
 }

@@ -91,6 +91,7 @@ export default function ManageAccount() {
     <CardMain>
       <CardHeader>
         <CardTitle>Manage Account</CardTitle>
+        <div className='h-2'/>
         <CardDescription>
           Update your profile information to connect with like-minded
           entrepreneurs.

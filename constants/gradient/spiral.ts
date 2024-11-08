@@ -1,4 +1,4 @@
-import { boxBackgroundCss } from "@/utils/box";
+import { boxBackgroundCss } from "@/utils/css/background/css";
 import { resolveGradient } from "@/utils/resolveGradient";
 
 export const spiral = (ringSize:number) =>

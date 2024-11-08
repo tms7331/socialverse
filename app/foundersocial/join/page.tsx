@@ -3,19 +3,23 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Button } from "@/components/ui/button"
-import LoginButton from "@/components/LoginButton"
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useSession } from 'next-auth/react'
 import QRCode from 'react-qr-code';
 import { ReclaimProofRequest } from '@reclaimprotocol/js-sdk';
+
+const writeJoinEvent = async (did: string, dataTag: string, data: string) => {
+    const tableName = "socialverse_data";
+    const response = await fetch("/api/addItem", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "tableName": tableName, "content": { "did": did, "dataTag": dataTag, "data": data } }),
+    });
+    const result = await response.json();
+    console.log("Add item result:", result);
+};
 
 
 const fetchAccount = async (did: string) => {
@@ -102,6 +106,7 @@ export default function JoinPage() {
 
     const handleYCVerification = () => {
         // This is where you'd implement the actual YC verification logic
+        writeJoinEvent(session?.googleId as string, "yc_founder", "true");
         setIsYCVerified(true)
     }
 
@@ -118,26 +123,13 @@ export default function JoinPage() {
                     <Card>
                         <CardHeader>
                             <CardTitle>Create Your Account</CardTitle>
-                            <CardDescription>Sign up and verify your YC status</CardDescription>
+                            <CardDescription>Join our community by verifying your YC status</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                            <LoginButton />
-                            <div className="relative">
-                                <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-gray-300"></div>
-                                </div>
-                                <div className="relative flex justify-center text-sm">
-                                    <span className="px-2 bg-white text-gray-500">
-                                        After signing in
-                                    </span>
-                                </div>
-                            </div>
-
                             <div className="w-full max-w-md mx-auto space-y-6">
                                 <Button onClick={getVerificationReq} className="w-full">
                                     Prove YC Founder Status
                                 </Button>
-
                                 {requestUrl && (
                                     <Card>
                                         <CardHeader>
@@ -152,22 +144,6 @@ export default function JoinPage() {
                                     </Card>
                                 )}
                             </div>
-
-                            <Dialog>
-                                <DialogContent>
-                                    <DialogHeader>
-                                        <DialogTitle>Verify YCombinator Membership</DialogTitle>
-                                        <DialogDescription>
-                                            Please provide your YC credentials to verify your membership.
-                                        </DialogDescription>
-                                    </DialogHeader>
-                                    <div className="grid gap-4 py-4">
-                                        <Button onClick={handleYCVerification}>
-                                            Verify with YC
-                                        </Button>
-                                    </div>
-                                </DialogContent>
-                            </Dialog>
                         </CardContent>
                     </Card>
                 ) : (

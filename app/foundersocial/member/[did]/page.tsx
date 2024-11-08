@@ -41,9 +41,7 @@ export default function Component() {
     const [message, setMessage] = useState("")
 
     const handleSendMessage = () => {
-        // Here you would typically send the message to your backend
         console.log("Sending message:", message)
-        // Clear the message after sending
         setMessage("")
     }
 

@@ -99,7 +99,7 @@ export default function Component() {
             <h1 className="text-3xl font-bold mb-6">My Events</h1>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {events.map((event) => (
-                    <Link href={`/irlsocialclub/event/${event.eventId}`} key={event.eventId} className="block hover:shadow-lg transition-shadow duration-200">
+                    <Link href={`/foundersocial/event/${event.eventId}`} key={event.eventId} className="block hover:shadow-lg transition-shadow duration-200">
                         <Card>
                             <CardHeader>
                                 <CardTitle>{event.title}</CardTitle>

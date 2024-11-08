@@ -9,7 +9,7 @@ enum EStyle {
   Underline = '4',
   Blink = '5',
   Inverse = '7',
-  Hidden = '8',
+  Hidden = '8'
 }
 
 const RESET = `${ESCAPE}[0m`;
@@ -23,7 +23,7 @@ enum EColor {
   Blue = '4',
   Magenta = '5',
   Cyan = '6',
-  White = '7',
+  White = '7'
 }
 
 enum EColorStyle {
@@ -37,7 +37,7 @@ enum EColorStyle {
   // Empty7 = "7",
   // Empty8 = "8",
   Intense = '9',
-  IntenseBackground = '10',
+  IntenseBackground = '10'
 }
 
 type TUValueOf<T> = T[keyof T];
@@ -55,35 +55,15 @@ const composer = (
     .filter(Boolean)
     .join(';')}m${text}${RESET}`;
 
-export const bold = (text: string) =>
-  composer(text, EStyle.Bold);
-export const faint = (text: string) =>
-  composer(text, EStyle.Faint);
+export const bold = (text: string) => composer(text, EStyle.Bold);
+export const faint = (text: string) => composer(text, EStyle.Faint);
 export const magenta = (text: string) =>
   composer(text, EColor.Magenta, EStyle.Faint);
-export const underline = (text: string) =>
-  composer(text, EStyle.Underline);
-export const inverse = (text: string) =>
-  composer(text, EStyle.Inverse);
+export const underline = (text: string) => composer(text, EStyle.Underline);
+export const inverse = (text: string) => composer(text, EStyle.Inverse);
 export const red = (text: string) =>
-  composer(
-    text,
-    EStyle.Bold,
-    EColor.Red,
-    EColorStyle.Intense
-  );
+  composer(text, EStyle.Bold, EColor.Red, EColorStyle.Intense);
 export const green = (text: string) =>
-  composer(
-    text,
-    EStyle.Bold,
-    EColor.Green,
-    EColorStyle.Intense
-  );
-  export const inverseGreen = (text: string) =>
-    composer(
-      text,
-      EStyle.Inverse,
-      EColor.Green,
-      EColorStyle.Intense
-    );
-
+  composer(text, EStyle.Bold, EColor.Green, EColorStyle.Intense);
+export const inverseGreen = (text: string) =>
+  composer(text, EStyle.Inverse, EColor.Green, EColorStyle.Intense);

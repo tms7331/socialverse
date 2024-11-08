@@ -1,6 +1,4 @@
-import { MODULE_DECLARATIONS } from "~ops/template/declarations/constants";
+import { MODULE_DECLARATIONS } from '@/ops/template/declarations/constants';
 
-export type TModuleDeclarations =
-  typeof MODULE_DECLARATIONS;
-export type TModuleDeclarationKey =
-  keyof TModuleDeclarations;
+export type TModuleDeclarations = typeof MODULE_DECLARATIONS;
+export type TModuleDeclarationKey = keyof TModuleDeclarations;

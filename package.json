@@ -8,9 +8,10 @@
     "install:force": "npm install --force",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "tsc --build . & next lint",
     "erase": "esrun ops/eraser && npm i",
-    "favicons": "esrun ops/favicons/index.mts"
+    "favicons": "esrun ops/favicons/index.mts",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.682.0",

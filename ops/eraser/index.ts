@@ -1,5 +1,5 @@
-import { deleteEntries } from '@/delete/entries';
-import { red, green, inverse } from '@/display';
+import { deleteEntries } from '../delete/entries';
+import { red, green, inverse } from '../display';
 import glob from 'fast-glob';
 
 const PATTERNS = [
@@ -8,7 +8,7 @@ const PATTERNS = [
   'node_modules',
   'dist',
   '.next',
-  'tsconfig.tsbuildinfo',
+  'tsconfig.tsbuildinfo'
 ];
 
 async function* fire(): AsyncGenerator<any> {
@@ -17,7 +17,7 @@ async function* fire(): AsyncGenerator<any> {
     if (PATTERNS[i]) {
       const files = await glob(PATTERNS[i], {
         onlyFiles: false,
-        dot: true,
+        dot: true
       });
       yield files;
       i++;

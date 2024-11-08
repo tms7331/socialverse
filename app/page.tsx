@@ -5,115 +5,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent } from '@/components/ui/card';
 import Link from 'next/link';
 import Image from 'next/image';
+import { CATEGORIES } from '@/constants/categories';
+import { TPages } from '@/types/pages';
+import { PAGES } from '@/constants/pages';
+
 const LOGO_SIZE = 28;
-import {
-  Music2,
-  Brain,
-  Rocket,
-  Bike,
-  Heart,
-  Spade,
-  Users,
-  MessageSquareHeart,
-  Handshake,
-  PartyPopper
-} from 'lucide-react';
-
-interface Category {
-  id: string;
-  label: string;
-}
-
-interface Page {
-  id: string;
-  title: string;
-  icon: React.ReactNode;
-  categories: string[];
-  href: string;
-}
-
-const categories: Category[] = [
-  { id: 'fun', label: 'Fun' },
-  { id: 'dating', label: 'Dating' },
-  { id: 'networking', label: 'Networking' },
-  { id: 'realWorld', label: 'Real World' },
-  { id: 'videoChat', label: 'Video Chat' }
-];
-
-const pages: Page[] = [
-  {
-    id: 'foundersocial',
-    title: 'Foundersocial',
-    icon: <Rocket className="h-8 w-8" />,
-    categories: ['realWorld'],
-    href: '/foundersocial'
-  },
-  {
-    id: 'irlsocialclub',
-    title: 'IRL Social Club',
-    icon: <PartyPopper className="h-8 w-8" />,
-    categories: ['realWorld'],
-    href: '/irlsocialclub'
-  },
-  {
-    id: 'truth-or-lai',
-    title: 'Truth or l-AI',
-    icon: <Brain className="h-8 w-8" />,
-    categories: ['fun', 'videoChat'],
-    href: '/comingsoon'
-  },
-  {
-    id: 'fusion-tunes',
-    title: 'Fusion Tunes',
-    icon: <Music2 className="h-8 w-8" />,
-    categories: ['fun', 'videoChat'],
-    href: '/comingsoon'
-  },
-  {
-    id: 'startup-roulette',
-    title: 'Startup Roulette',
-    icon: <Handshake className="h-8 w-8" />,
-    categories: ['videoChat'],
-    href: '/comingsoon'
-  },
-  {
-    id: 'poker-face',
-    title: 'Poker Face',
-    icon: <Spade className="h-8 w-8" />,
-    categories: ['fun', 'videoChat'],
-    href: 'https://suave-poker-frontend.vercel.app/'
-  },
-  {
-    id: 'strava-pvp',
-    title: 'Strava PVP',
-    icon: <Bike className="h-8 w-8" />,
-    categories: ['fun'],
-    href: '/comingsoon'
-  },
-  {
-    id: 'love-actually',
-    title: 'Love, Actually',
-    icon: <MessageSquareHeart className="h-8 w-8" />,
-    categories: ['dating'],
-    href: '/comingsoon'
-  },
-  {
-    id: 'sociairl',
-    title: 'SociaIRL',
-    icon: <Heart className="h-8 w-8" />,
-    categories: ['dating', 'realWorld'],
-    href: '/comingsoon'
-  },
-  {
-    id: 'cofounder-match',
-    title: 'Cofounder Match',
-    icon: <Users className="h-8 w-8" />,
-    categories: ['realWorld', ' networking'],
-    href: '/comingsoon'
-  }
-  // { id: 'love-actuallyf', title: 'Love, ActuallyF', icon: <MessageSquareHeart className="h-8 w-8" />, categories: ['dating'], href: '/comingsoon' },
-  // { id: 'sociairlf', title: 'SociaIRLF', icon: <Heart className="h-8 w-8" />, categories: ['dating', 'realWorld'], href: '/comingsoon' },
-];
 
 export default function LandingPage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -126,10 +22,10 @@ export default function LandingPage() {
     );
   };
 
-  const filteredPages =
+  const filteredPages: TPages =
     selectedCategories.length === 0
-      ? pages
-      : pages.filter((page) =>
+      ? PAGES
+      : PAGES.filter((page) =>
           page.categories.some((cat) => selectedCategories.includes(cat))
         );
 
@@ -141,7 +37,12 @@ export default function LandingPage() {
           href="/"
           style={{ height: LOGO_SIZE }}
         >
-          <Image src="logo-light.svg" width={LOGO_SIZE} height={LOGO_SIZE} />
+          <Image
+            src="logo-light.svg"
+            alt="logo"
+            width={LOGO_SIZE}
+            height={LOGO_SIZE}
+          />
           <h1 className="text-3xl font-bold font-title">
             Welcome to SocialVerse
           </h1>
@@ -150,7 +51,7 @@ export default function LandingPage() {
         <div>
           <h2 className="text-xl font-semibold mb-4">Filter by Category:</h2>
           <div className="flex flex-wrap gap-4">
-            {categories.map((category) => (
+            {CATEGORIES.map((category) => (
               <div key={category.id} className="flex items-center space-x-2">
                 <Checkbox
                   id={category.id}

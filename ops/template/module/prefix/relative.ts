@@ -1,2 +1,1 @@
-export const SOURCE_PREFIX_RELATIVE =
-  "./";
+export const SOURCE_PREFIX_RELATIVE = './';

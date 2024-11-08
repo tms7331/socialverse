@@ -1,10 +1,10 @@
-import { Toaster } from "@/components/ui/toaster"
-import AuthProvider from "@/components/AuthProvider";
-import Navbar from "@/components/foundersocial/Navbar";
-import "@/css/globals.css";
+import { Toaster } from '@/components/ui/toaster';
+import AuthProvider from '@/components/AuthProvider';
+import Navbar from '@/components/foundersocial/Navbar';
+import '@/css/globals.css';
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {

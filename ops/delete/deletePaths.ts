@@ -1,5 +1,5 @@
 import fs, { PathLike } from 'fs';
-import { unlink } from  "fs/promises";
+import { unlink } from 'fs/promises';
 
 export const deletePaths = (paths: PathLike[]) => {
   paths.forEach((path: PathLike) => {

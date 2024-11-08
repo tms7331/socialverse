@@ -1,2 +1,1 @@
-export const endComma = (v: string) =>
-  `${v},`;
+export const endComma = (v: string) => `${v},`;

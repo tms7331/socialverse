@@ -1,2 +1,1 @@
-export const SOURCE_PREFIX_INTERNAL =
-  "~/";
+export const SOURCE_PREFIX_INTERNAL = '~/';

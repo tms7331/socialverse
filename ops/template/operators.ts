@@ -1,10 +1,10 @@
-export const ASSIGNMENT_OPERATOR = "=";
+export const ASSIGNMENT_OPERATOR = '=';
 export const BRACES_CURLY = {
-  open: "{",
-  closed: "}",
+  open: '{',
+  closed: '}'
 } as const;
 export const BRACES_SQUARE = {
-  open: "[",
-  closed: "]",
+  open: '[',
+  closed: ']'
 } as const;
 export const QUOTE = '"';

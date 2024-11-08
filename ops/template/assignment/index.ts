@@ -1,4 +1,4 @@
-import { TAssignmentDelimiter } from "~ops/template/assignment/delimiter";
+import { TAssignmentDelimiter } from '@/ops/template/assignment/delimiter';
 
 export const templateAssignment = <
   N extends string,
@@ -8,5 +8,4 @@ export const templateAssignment = <
   name: N,
   delimiter: D,
   value: V
-) =>
-  `${name}${delimiter}${value}` as const;
+) => `${name}${delimiter}${value}` as const;

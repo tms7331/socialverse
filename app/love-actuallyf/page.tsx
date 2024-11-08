@@ -45,7 +45,7 @@ export default function Component() {
                   <h2 className="text-white text-xl font-semibold">
                     John Doe, 28
                   </h2>
-                  <p className="text-gray-200 text-sm">5 miles away</p>
+                  <p className="text-gray-200 text-base">5 miles away</p>
                 </div>
               </div>
               <div className="flex justify-between items-center p-4 bg-white border-b">
@@ -65,7 +65,7 @@ export default function Component() {
                 </button>
               </div>
               <div className="p-6 bg-white">
-                <p className="text-gray-700 text-sm">
+                <p className="text-gray-700 text-base">
                   Software Developer | Dog Lover | Hiking Enthusiast I'm a
                   passionate coder by day and an adventurous spirit by night.
                   When I'm not crafting elegant solutions to complex problems,
@@ -89,8 +89,8 @@ export default function Component() {
           <div className="space-y-4">
             <div>
               <div className="flex justify-between mb-1">
-                <span className="text-sm font-medium text-gray-700">Music</span>
-                <span className="text-sm font-medium text-gray-700">80%</span>
+                <span className="text-base font-medium text-gray-700">Music</span>
+                <span className="text-base font-medium text-gray-700">80%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5">
                 <div
@@ -101,10 +101,10 @@ export default function Component() {
             </div>
             <div>
               <div className="flex justify-between mb-1">
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-base font-medium text-gray-700">
                   Sports
                 </span>
-                <span className="text-sm font-medium text-gray-700">70%</span>
+                <span className="text-base font-medium text-gray-700">70%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5">
                 <div
@@ -115,10 +115,10 @@ export default function Component() {
             </div>
             <div>
               <div className="flex justify-between mb-1">
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-base font-medium text-gray-700">
                   Compatibility
                 </span>
-                <span className="text-sm font-medium text-gray-700">60%</span>
+                <span className="text-base font-medium text-gray-700">60%</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2.5">
                 <div

@@ -61,7 +61,7 @@ export default function LandingPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-black mb-1"
+                  className="block text-base font-medium text-black mb-1"
                 >
                   Get Early Access
                 </label>
@@ -78,7 +78,7 @@ export default function LandingPage() {
               <div>
                 <label
                   htmlFor="feedback"
-                  className="block text-sm font-medium text-black mb-1"
+                  className="block text-base font-medium text-black mb-1"
                 >
                   What are you looking for our of a dating app? What would
                   convince you to use Love, Actually over other apps?

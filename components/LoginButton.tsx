@@ -5,13 +5,15 @@ const LoginButton: React.FC = () => {
   const { data: session } = useSession();
 
   return (
-    <div>
+    <>
       {session ? (
         <>
           <Button
             onClick={() => signOut()}
-            className="w-full"
-            variant="outline"
+            // className="w-full"
+            // variant="outline"
+            size="lg"
+            variant="default"
           >
             Sign out from Google
           </Button>
@@ -19,13 +21,15 @@ const LoginButton: React.FC = () => {
       ) : (
         <Button
           onClick={() => signIn('google')}
-          className="w-full"
-          variant="outline"
+          // className="w-full"
+          // variant="outline"
+          variant="default"
+          size="lg"
         >
           Sign in with Google
         </Button>
       )}
-    </div>
+    </>
   );
 };
 

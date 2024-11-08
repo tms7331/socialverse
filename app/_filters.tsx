@@ -21,7 +21,7 @@ export const Filters: FC<TProps> = (props) => {
             className={cx(
               'relative',
               'p-2',
-              'text-sm font-medium leading-none',
+              'text-base font-medium leading-none',
               'cursor-pointer',
               'text-black',
               'peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
@@ -35,7 +35,7 @@ export const Filters: FC<TProps> = (props) => {
                 checked={props.selectedCategories.includes(category.id)}
                 onCheckedChange={() => props.onCategoryChange(category.id)}
               />
-              <p className="mt-0.5">{category.label}</p>
+              <p className={cx("mt-0")}>{category.label}</p>
             </div>
           </label>
         ))}

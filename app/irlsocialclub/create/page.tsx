@@ -2,13 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
+import { CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -19,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { CardMain } from '@/components/ui/card/main';
 
 export default function CreateEvent() {
   const [title, setTitle] = useState('');
@@ -60,7 +55,7 @@ export default function CreateEvent() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <CardMain>
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">
           Create Event
@@ -154,6 +149,6 @@ export default function CreateEvent() {
           </Button>
         </CardFooter>
       </form>
-    </Card>
+    </CardMain>
   );
 }

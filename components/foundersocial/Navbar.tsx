@@ -1,6 +1,4 @@
 'use client';
-
-import * as React from 'react';
 import Link from 'next/link';
 import { Rocket, Menu } from 'lucide-react';
 import { useState, useEffect } from 'react';
@@ -12,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { cx } from 'class-variance-authority';
 
 function useDeviceType() {
   const [isMobile, setIsMobile] = useState(false);
@@ -42,12 +41,12 @@ export default function Component() {
     <div className="flex items-center mr-4">
       {session ? (
         <>
-          <span className="text-sm text-muted-foreground mr-2">
+          <span className="text-base text-muted-foreground mr-2 mt-0.5">
             Welcome, {session.user?.name}
           </span>
         </>
       ) : (
-        <span className="text-sm text-muted-foreground">
+        <span className="text-base text-muted-foreground">
           Please log in to see your profile
         </span>
       )}
@@ -55,11 +54,16 @@ export default function Component() {
   );
 
   return (
-    <header className="bg-white shadow-sm">
+    <header
+      className={
+        cx('text-white')
+        //'bg-white shadow-sm'
+      }
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center">
-          <Rocket className="h-8 w-8 text-primary mr-2" />
           <Link href="/foundersocial" className="flex items-center space-x-2">
+            <Rocket className="h-6 w-6 mr-2" />
             <span className="text-xl font-bold">Foundersocial</span>
           </Link>
         </div>

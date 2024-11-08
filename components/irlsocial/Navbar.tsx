@@ -40,7 +40,7 @@ const Navbar: React.FC = () => {
         <div className="ml-auto flex items-center space-x-4">
           {session ? (
             <>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-base text-muted-foreground">
                 Welcome, {session.user?.name}
               </span>
               <Avatar>
@@ -52,7 +52,7 @@ const Navbar: React.FC = () => {
               </Avatar>
             </>
           ) : (
-            <span className={cx('text-sm text-muted-foreground', 'text-white')}>
+            <span className={cx('text-base text-muted-foreground', 'text-white')}>
               Please log in to see your profile
             </span>
           )}

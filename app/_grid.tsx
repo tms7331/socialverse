@@ -14,7 +14,7 @@ export const Grid: FC<TProps> = ({ filteredPages }) => {
     <div className="relative p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <div className="absolute -inset-2 rounded-b-2.5xl bg-black opacity-20" />
       {isEmpty ? (
-        <p>None found.</p>
+        <p>No results.</p>
       ) : (
         filteredPages.map((page) => (
           <Link

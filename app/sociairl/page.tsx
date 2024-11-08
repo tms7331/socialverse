@@ -59,7 +59,7 @@ export default function LandingPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-black mb-1"
+                  className="block text-base font-medium text-black mb-1"
                 >
                   Get Early Access
                 </label>
@@ -76,7 +76,7 @@ export default function LandingPage() {
               <div>
                 <label
                   htmlFor="feedback"
-                  className="block text-sm font-medium text-black mb-1"
+                  className="block text-base font-medium text-black mb-1"
                 >
                   What experiences would you like to see on SociaIRL?
                 </label>

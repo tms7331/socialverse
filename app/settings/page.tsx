@@ -80,7 +80,7 @@ export default function SettingsPage() {
               />
               <label
                 htmlFor={key}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
                 {key === 'sameIncome'
                   ? 'Same Income'

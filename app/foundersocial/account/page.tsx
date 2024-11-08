@@ -2,18 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
+import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { useSession } from 'next-auth/react';
+import { CardMain } from '@/components/ui/card/main';
 
 const fetchAccount = async (did: string) => {
   const tableName = 'socialverse_users';
@@ -94,7 +88,7 @@ export default function ManageAccount() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <CardMain>
       <CardHeader>
         <CardTitle>Manage Account</CardTitle>
         <CardDescription>
@@ -143,6 +137,6 @@ export default function ManageAccount() {
           </Button>
         </CardFooter>
       </form>
-    </Card>
+    </CardMain>
   );
 }

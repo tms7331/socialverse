@@ -90,7 +90,7 @@ export default function Component() {
         <div>
           <label
             htmlFor="availability"
-            className="block text-sm font-medium mb-2"
+            className="block text-base font-medium mb-2"
           >
             Describe your availability
           </label>
@@ -122,7 +122,7 @@ export default function Component() {
                     />
                     <label
                       htmlFor={activity.id}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
                       {activity.label}
                     </label>
@@ -144,7 +144,7 @@ export default function Component() {
                         />
                         <label
                           htmlFor={child.id}
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
                           {child.label}
                         </label>
@@ -175,7 +175,7 @@ export default function Component() {
                 />
                 <label
                   htmlFor={preference.id}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-base font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   {preference.label}
                 </label>

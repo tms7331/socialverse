@@ -60,8 +60,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Welcome to SocialVerse</h1>
-
+        <h1 className="text-3xl font-bold font-title mb-6">Welcome to SocialVerse</h1>
         <div className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Filter by Category:</h2>
           <div className="flex flex-wrap gap-4">

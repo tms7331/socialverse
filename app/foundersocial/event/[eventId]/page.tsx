@@ -11,32 +11,10 @@ import { Card, CardContent } from "@/components/ui/card"
 
 type UserProfile = {
     did: string
-    name: string
+    userName: string
     image: string
     bio: string
 }
-
-
-const userProfiles: UserProfile[] = [
-    {
-        did: "did1",
-        name: "Alice Johnson",
-        image: "/placeholder.svg?height=100&width=100",
-        bio: "Passionate about sustainable technology and green energy solutions.",
-    },
-    {
-        did: "did2",
-        name: "Bob Smith",
-        image: "/placeholder.svg?height=100&width=100",
-        bio: "Aspiring chef with a knack for fusion cuisine and food photography.",
-    },
-    {
-        did: "did3",
-        name: "Carol Martinez",
-        image: "/placeholder.svg?height=100&width=100",
-        bio: "Tech enthusiast working on AI-driven solutions for healthcare.",
-    }
-]
 
 
 const writeJoinEvent = async (eventId: string, did: string) => {
@@ -141,8 +119,7 @@ export default function EventPage() {
         description: '',
         date: '',
         time: '',
-        location: '123 Main St, Anytown, USA', // Placeholder until we add location to events
-        attendees: 50 // Placeholder until we add attendee tracking
+        attendees: 0
     });
 
     useEffect(() => {
@@ -187,7 +164,13 @@ export default function EventPage() {
                     //     ...attendee,
                     //     ...attendees[attendee.did]
                     // }));
-                    setAttendees(attendeesProfileResp.items);
+                    if (attendeesProfileResp.items && attendeesProfileResp.items.length > 0) {
+                        setAttendees(attendeesProfileResp.items);
+                        setEvent(prevState => ({
+                            ...prevState,
+                            attendees: attendeesProfileResp.items.length
+                        }));
+                    }
 
                     // Get commonalities
                     if (did) {
@@ -235,10 +218,6 @@ export default function EventPage() {
                     <span>{event.time}</span>
                 </div>
                 <div className="flex items-center">
-                    <MapPinIcon className="w-5 h-5 mr-2 text-muted-foreground" />
-                    <span>{event.location}</span>
-                </div>
-                <div className="flex items-center">
                     <UsersIcon className="w-5 h-5 mr-2 text-muted-foreground" />
                     <span>{event.attendees} attendees</span>
                 </div>
@@ -267,11 +246,11 @@ export default function EventPage() {
                                 <div className="flex-1 p-6 bg-background">
                                     <div className="flex items-center space-x-4">
                                         <Avatar className="w-16 h-16">
-                                            <AvatarImage src={profile.image} alt={profile.name} />
-                                            <AvatarFallback>{profile.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+                                            <AvatarImage src={profile.image} alt={profile.userName} />
+                                            <AvatarFallback>{profile.userName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                                         </Avatar>
                                         <div>
-                                            <h2 className="text-xl font-semibold">{profile.name}</h2>
+                                            <h2 className="text-xl font-semibold">{profile.userName}</h2>
                                             <p className="text-muted-foreground">{profile.bio}</p>
                                         </div>
                                     </div>

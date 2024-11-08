@@ -61,7 +61,7 @@ export default function ExplorePage() {
                             <p>{event.description}</p>
                         </CardContent>
                         <CardFooter>
-                            <Link href={`/irlsocialclub/event/${event.eventId}`} className="w-full">View Details</Link>
+                            <Link href={`/foundersocial/event/${event.eventId}`} className="w-full">View Details</Link>
                         </CardFooter>
                     </Card>
                 ))}

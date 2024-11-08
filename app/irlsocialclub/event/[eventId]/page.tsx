@@ -119,8 +119,7 @@ export default function EventPage() {
         description: '',
         date: '',
         time: '',
-        location: '123 Main St, Anytown, USA', // Placeholder until we add location to events
-        attendees: 50 // Placeholder until we add attendee tracking
+        attendees: 0
     });
 
     useEffect(() => {
@@ -165,7 +164,13 @@ export default function EventPage() {
                     //     ...attendee,
                     //     ...attendees[attendee.did]
                     // }));
-                    setAttendees(attendeesProfileResp.items);
+                    if (attendeesProfileResp.items && attendeesProfileResp.items.length > 0) {
+                        setAttendees(attendeesProfileResp.items);
+                        setEvent(prevState => ({
+                            ...prevState,
+                            attendees: attendeesProfileResp.items.length
+                        }));
+                    }
 
                     // Get commonalities
                     if (did) {
@@ -211,10 +216,6 @@ export default function EventPage() {
                 <div className="flex items-center">
                     <ClockIcon className="w-5 h-5 mr-2 text-muted-foreground" />
                     <span>{event.time}</span>
-                </div>
-                <div className="flex items-center">
-                    <MapPinIcon className="w-5 h-5 mr-2 text-muted-foreground" />
-                    <span>{event.location}</span>
                 </div>
                 <div className="flex items-center">
                     <UsersIcon className="w-5 h-5 mr-2 text-muted-foreground" />

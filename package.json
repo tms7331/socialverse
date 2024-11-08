@@ -2,12 +2,15 @@
   "name": "socialverse",
   "version": "0.1.0",
   "private": true,
+  "description": "A healthy twist on mobile video social media. Find your tribe, and find your vibe. Enter the Socialverse to consume the content that empowers you.",
   "scripts": {
     "dev": "next dev",
     "install:force": "npm install --force",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "erase": "esrun ops/eraser && npm i",
+    "favicons": "esrun ops/favicons/index.mts"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.682.0",
@@ -25,6 +28,7 @@
     "@reclaimprotocol/js-sdk": "^2.1.1",
     "@types/next-auth": "^3.13.0",
     "class-variance-authority": "^0.7.0",
+    "framer-motion": "^11.11.11",
     "lucide-react": "^0.454.0",
     "next": "15.0.2",
     "next-auth": "^4.24.10",
@@ -40,8 +44,14 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "15.0.2",
+    "favicons": "^7.2.0",
     "postcss": "^8",
+    "prettier": "^3.3.3",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "rollup": "^3.29.4",
+    "rollup-plugin-ts": "^3.4.5",
+    "fast-glob": "^3.3.2",
+    "fs-extra": "^11.2.0"
   }
 }

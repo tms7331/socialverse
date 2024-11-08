@@ -1,15 +1,17 @@
 'use client';
 
-import { ArrowRight, Menu } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <main className="flex-grow flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-24 flex flex-col md:flex-row items-center">
-          <div className="md:w-1/2 md:pr-8 mb-8 md:mb-0">
+    <div className="relative min-h-screen flex flex-col">
+      <main className="relative flex-grow flex items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 flex flex-col md:flex-row items-center">
+          <div className="absolute inset-0 bg-background opacity-60 rounded-xl" />
+
+          <div className="relative md:w-1/2 md:pr-8 mb-8 md:mb-0">
             <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
               Connect in Real Life
             </h1>

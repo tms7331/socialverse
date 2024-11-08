@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { Menu, User } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 
 import {
@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { cx } from 'class-variance-authority';
 
 interface NavbarProps {
   session?: {
@@ -29,8 +30,8 @@ const Navbar: React.FC = () => {
   const { data: session } = useSession();
 
   return (
-    <nav className="border-b">
-      <div className="flex h-16 items-center px-4">
+    <nav className={cx('relative')}>
+      <div className="flex h-16 items-center container mx-auto px-4">
         <div className="flex items-center space-x-4">
           <Link href="/irlsocialclub" className="flex items-center space-x-2">
             <span className="text-xl font-bold">IRL Social Club</span>
@@ -51,13 +52,13 @@ const Navbar: React.FC = () => {
               </Avatar>
             </>
           ) : (
-            <span className="text-sm text-muted-foreground">
+            <span className={cx('text-sm text-muted-foreground', 'text-white')}>
               Please log in to see your profile
             </span>
           )}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="Open menu">
+              <Button variant="secondary" size="icon" aria-label="Open menu">
                 <Menu className="h-6 w-6" />
               </Button>
             </DropdownMenuTrigger>
@@ -91,6 +92,7 @@ const Navbar: React.FC = () => {
           </DropdownMenu>
         </div>
       </div>
+      <hr className='border-b-px border-white opacity-20'/>
     </nav>
   );
 };

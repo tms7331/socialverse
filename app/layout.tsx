@@ -3,6 +3,8 @@ import { Toaster } from '@/components/ui/toaster';
 import AuthProvider from '@/components/AuthProvider';
 import localFont from 'next/font/local';
 import { cx } from 'class-variance-authority';
+import { Shell } from '@/shell';
+
 import '@/css/reset.css';
 import '@/css/globals.css';
 
@@ -54,7 +56,7 @@ export default function RootLayout({
             'antialiased'
           )}
         >
-          {children}
+          <Shell>{children}</Shell>
           <Toaster />
         </body>
       </html>

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { cx } from 'class-variance-authority';
+import { GRADIENT_TEAL_YELLOW_PINK } from '@/constants/gradient/constants';
 // import { Facebook, Twitter, Instagram, Github } from 'lucide-react'
 
 export default function ComingSoon() {
@@ -16,7 +18,14 @@ export default function ComingSoon() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-400 to-indigo-600 p-4">
+    <div
+      className={cx(
+        'relative min-h-screen flex items-center justify-center p-4'
+        // 'bg-gradient-to-br from-purple-400 to-indigo-600'
+      )}
+      // style={{ backgroundImage: GRADIENT_TEAL_YELLOW_PINK }}
+    >
+      
       <div className="text-center">
         <h1 className="text-5xl font-bold text-white mb-4">Coming Soon</h1>
         <p className="text-xl text-white mb-8">

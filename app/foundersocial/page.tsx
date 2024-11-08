@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import LoginButton from '@/components/LoginButton';
 import Link from 'next/link';
+import { cx } from 'class-variance-authority';
 
 const fetchYCProof = async (did: string) => {
   const tableName = 'socialverse_data';
@@ -44,7 +45,9 @@ export default function LandingPage() {
   }, [session]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white">
+    <div
+      className={cx('min-h-screen', 'bg-gradient-to-b from-gray-100 to-white')}
+    >
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-8">
           Welcome to Foundersocial

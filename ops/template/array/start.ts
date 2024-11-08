@@ -1,4 +1,4 @@
-import { MODULE_DECLARATIONS } from '@/template/declarations/constants';
+import { MODULE_DECLARATIONS } from "../../template/declarations/constants";
 
 export type TTTitleToUpperCaseSnake<
   T extends string,

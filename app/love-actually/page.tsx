@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { cx } from 'class-variance-authority';
 
 export default function LandingPage() {
   const [email, setEmail] = useState('');
@@ -23,7 +24,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-100/95 to-white/95 bg-[url('/bg4.png')] bg-cover bg-center bg-no-repeat bg-blend-overlay">
+    <div className={cx("min-h-screen bg-gradient-to-b from-blue-100/95 to-white/95 bg-[url('/bg4.png')] bg-cover bg-center bg-no-repeat bg-blend-overlay")}>
       <main className="container mx-auto px-4 py-12">
         <section className="max-w-2xl mx-auto text-center mb-12 bg-white/40 backdrop-blur-sm rounded-lg p-8">
           <h2 className="text-4xl font-bold mb-6 text-gray-800">

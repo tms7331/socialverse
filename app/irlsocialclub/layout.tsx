@@ -1,19 +1,20 @@
-import type { Metadata } from "next";
-// import type { AppProps } from "next/app";
-import { SessionProvider } from "next-auth/react";
-import { Toaster } from "@/components/ui/toaster"
-import AuthProvider from "@/components/AuthProvider";
-import Navbar from "@/components/irlsocial/Navbar";
-import "../globals.css";
+import { Toaster } from '@/components/ui/toaster';
+import AuthProvider from '@/components/AuthProvider';
+import Navbar from '@/app/irlsocialclub/navbar';
+import '@/css/globals.css';
+import { ShellHeader } from '@/shell/header';
+import { IrlsocialclubNavTitle } from '@/app/irlsocialclub/navbar/title';
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <AuthProvider>
-      <Navbar />
+      <ShellHeader title={<IrlsocialclubNavTitle />}>
+        <Navbar />
+      </ShellHeader>
       {children}
       <Toaster />
     </AuthProvider>

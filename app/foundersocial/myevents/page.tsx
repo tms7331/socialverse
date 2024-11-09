@@ -1,10 +1,15 @@
-"use client"
+'use client';
 
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { useSession } from 'next-auth/react'
+import Link from 'next/link';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle
+} from '@/components/ui/card';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-
 
 type Event = {
     eventId: string;
@@ -12,51 +17,48 @@ type Event = {
     description: string;
     date: string;
     time: string;
-}
-
+};
 
 const getMyEvents = async (did: string) => {
-    const response = await fetch("/api/queryItems", {
-        method: "POST",
+    const response = await fetch('/api/queryItems', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            tableName: "fs_attendees",
-            partitionKey: "did",  // Example partition key for GSI
-            partitionValue: did,  // Value to query by
-            indexName: "did-index",     // Secondary index name
+            tableName: 'fs_attendees',
+            partitionKey: 'did', // Example partition key for GSI
+            partitionValue: did, // Value to query by
+            indexName: 'did-index' // Secondary index name
             // Optional sort key and value
             //sortKey: "createdAt",
             //sortValue: 1633036800,
-        }),
+        })
     });
     const result = await response.json();
-    console.log("Queried items from secondary index:", result);
+    console.log('Queried items from secondary index:', result);
     return result;
 };
 
-
 const bulkQuery = async (eventIds: string[]) => {
-    console.log("Bulk querying events:", eventIds);
-    const tableName = "fs_events";
-    const keys = eventIds.map(eventId => ({ eventId: eventId }))
-    const response = await fetch("/api/batchGetItems", {
-        method: "POST",
+    console.log('Bulk querying events:', eventIds);
+    const tableName = 'fs_events';
+    const keys = eventIds.map((eventId) => ({ eventId: eventId }));
+    const response = await fetch('/api/batchGetItems', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             tableName: tableName,
-            keys: keys,
-        }),
+            keys: keys
+        })
     });
 
     const result = await response.json();
-    console.log("Bulk queried items:", result);
+    console.log('Bulk queried items:', result);
     return result;
 };
-
 
 export default function Component() {
     const { data: session } = useSession();
@@ -91,8 +93,13 @@ export default function Component() {
 
     // Function to format date
     const formatDate = (date: Date) => {
-        return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-    }
+        return date.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    };
 
     return (
         <div className="container mx-auto px-4 py-8">

@@ -1,23 +1,26 @@
-'use client'
+'use client';
 
-import { useEffect, useState } from 'react'
-import { useSession } from 'next-auth/react'
-import { Button } from "@/components/ui/button"
-import LoginButton from "@/components/LoginButton"
-import Link from 'next/link'
-
+import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { Button } from '@/components/ui/button';
+import LoginButton from '@/components/LoginButton';
+import Link from 'next/link';
+import { cx } from 'class-variance-authority';
 
 const fetchYCProof = async (did: string) => {
-    const tableName = "socialverse_data";
-    const response = await fetch("/api/getItem", {
-        method: "POST",
+    const tableName = 'socialverse_data';
+    const response = await fetch('/api/getItem', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "tableName": tableName, "key": { "did": did, "dataTag": "yc_founder" } }),
+        body: JSON.stringify({
+            tableName: tableName,
+            key: { did: did, dataTag: 'yc_founder' }
+        })
     });
     const result = await response.json();
-    console.log("Get item result:", result);
+    console.log('Get item result:', result);
     return result.item;
 };
 
@@ -67,11 +70,16 @@ export default function LandingPage() {
                 </div>
             </main>
 
-            <footer className="bg-gray-100 mt-12">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-500">
+            <footer className="mt-12">
+                <p
+                    className={cx(
+                        'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-white',
+                        'text-base'
+                    )}
+                >
                     © 2024 Foundersocial. All rights reserved.
-                </div>
+                </p>
             </footer>
         </div>
-    )
+    );
 }

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
@@ -23,37 +23,38 @@ const writeJoinEvent = async (did: string, dataTag: string, data: string) => {
 
 
 const fetchAccount = async (did: string) => {
-    const tableName = "socialverse_users";
-    const response = await fetch("/api/getItem", {
-        method: "POST",
+    const tableName = 'socialverse_users';
+    const response = await fetch('/api/getItem', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "tableName": tableName, "key": { "did": did } }),
+        body: JSON.stringify({ tableName: tableName, key: { did: did } })
     });
     const result = await response.json();
-    console.log("Get item result:", result);
+    console.log('Get item result:', result);
     return result.item;
 };
 
-
 const writeAccount = async (did: string, userName: string, bio: string) => {
-    const tableName = "socialverse_users";
-    const response = await fetch("/api/addItem", {
-        method: "POST",
+    const tableName = 'socialverse_users';
+    const response = await fetch('/api/addItem', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "tableName": tableName, "content": { "did": did, "userName": userName, "bio": bio } }),
+        body: JSON.stringify({
+            tableName: tableName,
+            content: { did: did, userName: userName, bio: bio }
+        })
     });
     const result = await response.json();
-    console.log("Add item result:", result);
+    console.log('Add item result:', result);
 };
-
 
 export default function JoinPage() {
     const { data: session } = useSession();
-    const [isYCVerified, setIsYCVerified] = useState(false)
+    const [isYCVerified, setIsYCVerified] = useState(false);
 
     // State to store the verification request URL
     const [requestUrl, setRequestUrl] = useState('');
@@ -65,7 +66,11 @@ export default function JoinPage() {
         const PROVIDER_ID = process.env.NEXT_PUBLIC_RECLAIM_PROVIDER_ID;
 
         // Initialize the Reclaim SDK with your credentials
-        const reclaimProofRequest = await ReclaimProofRequest.init(APP_ID as string, APP_SECRET as string, PROVIDER_ID as string);
+        const reclaimProofRequest = await ReclaimProofRequest.init(
+            APP_ID as string,
+            APP_SECRET as string,
+            PROVIDER_ID as string
+        );
 
         // Generate the verification request URL
         const requestUrl = await reclaimProofRequest.getRequestUrl();
@@ -76,7 +81,6 @@ export default function JoinPage() {
 
         // Start listening for proof submissions
         await reclaimProofRequest.startSession({
-
             // Called when the user successfully completes the verification
             onSuccess: (proofs) => {
                 console.log('Verification success', proofs);
@@ -86,17 +90,21 @@ export default function JoinPage() {
             // Called if there's an error during verification
             onError: (error) => {
                 console.error('Verification failed', error);
-            },
+            }
         });
     };
 
     useEffect(() => {
         const initializeAccount = async () => {
             if (session?.googleId) {
-                console.log("Session changed:", session);
+                console.log('Session changed:', session);
                 const existingAccount = await fetchAccount(session.googleId as string);
                 if (!existingAccount) {
-                    writeAccount(session.googleId as string, session.user?.name as string, "");
+                    writeAccount(
+                        session.googleId as string,
+                        session.user?.name as string,
+                        ''
+                    );
                 }
             }
         };
@@ -165,4 +173,3 @@ export default function JoinPage() {
         </div>
     )
 }
-

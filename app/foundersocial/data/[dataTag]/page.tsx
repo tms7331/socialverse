@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { CardMain } from '@/components/ui/card/main';
 
-export function DataManagementClient() {
+export default function DataManagementClient() {
   const { data: session } = useSession();
   const params = useParams();
   const dataTag = params.dataTag;

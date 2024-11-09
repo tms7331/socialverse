@@ -7,6 +7,7 @@ import LoginButton from '@/components/LoginButton';
 import Link from 'next/link';
 import { cx } from 'class-variance-authority';
 
+
 const fetchYCProof = async (did: string) => {
     const tableName = 'socialverse_data';
     const response = await fetch('/api/getItem', {
@@ -43,30 +44,40 @@ export default function LandingPage() {
     }, [session])
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white">
-            <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-8">
-                    Welcome to Foundersocial
-                </h1>
-                <p className="text-xl text-gray-600 text-center mb-12">
-                    Welcome to Foundersocial, the exclusive community for Y Combinator founders looking to connect in meaningful ways. Foundersocial isn't just another networking app – it's where genuine connections begin. Before each event, gain insight into who will be attending and discover what you share in common, making every gathering not only enjoyable but truly valuable. Dive into curated experiences designed to foster both camaraderie and collaboration. Sign up to join the club and start building relationships that go beyond the pitch.
-                </p>
-                <div className="flex flex-col items-center space-y-4">
-                    {!session ? (
-                        <LoginButton />
-                    ) : isMember ? (
-                        <Link href="/foundersocial/explore">
-                            <Button size="lg">
-                                Explore Events
-                            </Button>
-                        </Link>
-                    ) : (
-                        <Link href="/foundersocial/join">
-                            <Button size="lg" variant="outline">
-                                Join the Community
-                            </Button>
-                        </Link>
-                    )}
+        <div
+            className={cx(
+                'min-h-screen'
+            )}
+        >
+            <main className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div className="relative my-12">
+                    <div className="absolute -inset-8 bg-white rounded-xl" />
+                    <div className="relative my-12">
+                        <h1 className="text-4xl font-extrabold text-gray-900 text-center mb-8">
+                            Welcome to Foundersocial
+                        </h1>
+                        <p className="text-xl text-gray-600 text-center mb-12">
+                            Welcome to Foundersocial, the exclusive community for Y Combinator founders looking to connect in meaningful ways. Foundersocial isn't just another networking app – it's where genuine connections begin. Before each event, gain insight into who will be attending and discover what you share in common, making every gathering not only enjoyable but truly valuable. Dive into curated experiences designed to foster both camaraderie and collaboration. Sign up to join the club and start building relationships that go beyond the pitch.
+                        </p>
+
+                        <div className="flex flex-col justify-center gap-4 items-center">
+                            {!session ? (
+                                <LoginButton />
+                            ) : isMember ? (
+                                <Link href="/foundersocial/explore">
+                                    <Button size="lg">
+                                        Explore Events
+                                    </Button>
+                                </Link>
+                            ) : (
+                                <Link href="/foundersocial/join">
+                                    <Button size="lg" variant="outline">
+                                        Join the Community
+                                    </Button>
+                                </Link>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </main>
 
@@ -83,3 +94,4 @@ export default function LandingPage() {
         </div>
     );
 }
+

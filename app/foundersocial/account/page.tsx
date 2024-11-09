@@ -133,7 +133,7 @@ export default function ManageAccount() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full"  size="lg">
             Update Profile
           </Button>
         </CardFooter>

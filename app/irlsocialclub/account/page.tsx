@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -210,7 +210,7 @@ export default function Component() {
                   onChange={(e) => setBio(e.target.value)}
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" size="lg">
                 Update
               </Button>
             </form>
@@ -222,15 +222,18 @@ export default function Component() {
             <CardTitle>Add Data</CardTitle>
             <CardDescription>Connect your accounts to add data</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {Object.entries(dataStatus).map(([source, status]) => (
-              <Link href={`/irlsocialclub/data/${source}`} key={source}>
-                <DataSourceButton
-                  key={source}
-                  name={source.charAt(0).toUpperCase() + source.slice(1)}
-                  uploaded={status}
-                />
-              </Link>
+          <CardContent>
+            {Object.entries(dataStatus).map(([source, status], index) => (
+              <Fragment key={source}>
+                {index !== 0 && <div className="h-2" />}
+                <Link href={`/irlsocialclub/data/${source}`}>
+                  <DataSourceButton
+                    key={source}
+                    name={source.charAt(0).toUpperCase() + source.slice(1)}
+                    uploaded={status}
+                  />
+                </Link>
+              </Fragment>
             ))}
           </CardContent>
         </Card>

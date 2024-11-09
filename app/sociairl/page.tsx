@@ -88,7 +88,7 @@ export default function LandingPage() {
                   className="w-full h-32"
                 />
               </div>
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" size="lg">
                 Submit
               </Button>
             </form>

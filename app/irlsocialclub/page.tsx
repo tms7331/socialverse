@@ -7,9 +7,8 @@ import Image from 'next/image';
 export default function LandingPage() {
   return (
     <main className="relative min-h-screen flex flex-col my-12">
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-6 flex flex-col md:flex-row items-center">
+      <div className="relative max-w-7xl mx-4 lg:mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-6 flex flex-col md:flex-row items-center">
         <div className="absolute inset-0 bg-background rounded-xl" />
-
         <div className="relative md:w-1/2 md:pr-8 mb-8 md:mb-0">
           <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
             Connect in Real Life

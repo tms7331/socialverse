@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Rocket, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { HEADER_LOGO_SIZE } from '@/shell/header';
 import { usePathname } from 'next/navigation';
 
 function useDeviceType() {
@@ -38,7 +37,6 @@ export default function Component() {
     { href: '/foundersocial/create', label: 'Create' },
     { href: '/foundersocial/myevents', label: 'My Events' }
   ];
-  console.log(pathname);
 
   const UserInfo = () => (
     <div className="flex items-center mr-4">
@@ -57,59 +55,45 @@ export default function Component() {
   );
 
   return (
-    <div className="flex flex-row items-start gap-4 grow">
-      <div
-        className="flex items-center justify-between gap-4 text-white"
-        style={{ height: HEADER_LOGO_SIZE }}
-      >
-        <div>{'>'}</div>
-        <Link href="/foundersocial" className="flex items-center gap-2">
-          <Rocket />
-          <h2 className="text-2xl">Foundersocial</h2>
-        </Link>
-      </div>
-      <div className="flex flex-col items-end grow gap-4">
-        {session ? (
-          !isMobile ? (
-            <nav className="flex items-center space-x-4">
-              {navItems.map((item) => (
-                <Link key={item.href} href={item.href}>
-                  <Button
-                    variant={pathname === item.href ? 'default' : 'ghost'}
-                  >
-                    {item.label}
-                  </Button>
-                </Link>
-              ))}
-            </nav>
-          ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Menu className="h-6 w-6" />
-                  <span className="sr-only">Toggle menu</span>
+    <div className="flex flex-col items-end grow gap-4">
+      {session ? (
+        !isMobile ? (
+          <nav className="flex items-center justify-end space-x-4">
+            {navItems.map((item) => (
+              <Link key={item.href} href={item.href}>
+                <Button variant={pathname === item.href ? 'default' : 'ghost'}>
+                  {item.label}
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <div className="px-2 py-1.5">
-                  <UserInfo />
-                </div>
-                {navItems.map((item) => (
-                  <DropdownMenuItem key={item.href} asChild>
-                    <Link href={item.href}>
-                      <Button variant="ghost" className="w-full justify-start">
-                        {item.label}
-                      </Button>
-                    </Link>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )
-        ) : null}
+              </Link>
+            ))}
+          </nav>
+        ) : (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <div className="px-2 py-1.5">
+                <UserInfo />
+              </div>
+              {navItems.map((item) => (
+                <DropdownMenuItem key={item.href} asChild>
+                  <Link href={item.href}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      {item.label}
+                    </Button>
+                  </Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        )
+      ) : null}
 
-        <UserInfo />
-      </div>
+      <UserInfo />
     </div>
   );
 }

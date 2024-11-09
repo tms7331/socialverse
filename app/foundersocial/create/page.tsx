@@ -58,7 +58,7 @@ export default function CreateEvent() {
         </CardTitle>
       </CardHeader>
       <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 ">
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input

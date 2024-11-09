@@ -39,7 +39,7 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
+    <div className="container mx-auto py-4 space-y-6">
       <Card>
         <CardHeader>
           <CardTitle>Add Data</CardTitle>
@@ -69,7 +69,7 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="space-y-2">
           {Object.entries(filters).map(([key, value]) => (
-            <div key={key} className="flex items-center space-x-2">
+            <div key={key} className="relative flex flex-wrap gap-4">
               <CheckboxText
                 id={key}
                 checked={value}

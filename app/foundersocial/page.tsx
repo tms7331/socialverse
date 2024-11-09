@@ -48,7 +48,6 @@ export default function LandingPage() {
     <div
       className={cx(
         'min-h-screen'
-        // , 'bg-gradient-to-b from-gray-100 to-white'
       )}
     >
       <main className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

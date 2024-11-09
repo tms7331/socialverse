@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { CardMain } from '@/components/ui/card/main';
 
 export default function DataManagementClient() {
   const { data: session } = useSession();
@@ -63,20 +64,22 @@ export default function DataManagementClient() {
   };
 
   if (isLoading) {
-    return <div className="text-center">Loading...</div>;
+    return <CardMain classValue="text-center p-4">Loading...</CardMain>;
   }
 
   if (!dataExists) {
     return (
-      <div className="text-center">
+      <CardMain classValue="text-center p-4">
         <p className="mb-4">No data found. Would you like to import data?</p>
-        <Button onClick={handleImportData}>Import Data</Button>
-      </div>
+        <Button onClick={handleImportData} size="lg">
+          Import Data
+        </Button>
+      </CardMain>
     );
   }
 
   return (
-    <div>
+    <CardMain>
       {data ? (
         <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {data}
@@ -84,6 +87,6 @@ export default function DataManagementClient() {
       ) : (
         <p>No data to display.</p>
       )}
-    </div>
+    </CardMain>
   );
 }

@@ -1,4 +1,4 @@
-'use client';;
+'use client';
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -20,22 +20,28 @@ export default function ComingSoon() {
     <>
       <ShellHeader />
       <CardMain>
-        <div className="flex flex-col gap-4 text-left p-8">
-          <h1 className="text-5xl font-bold">Coming Soon</h1>
-          <p className="text-xl">
+        <div className="flex flex-col gap-8 text-left py-8">
+          <h1 className="text-5xl font-bold px-8">Coming Soon</h1>
+          <hr className="w-full border-b-px border-black opacity-50" />
+          <p className="text-xl px-8">
             We're working hard to bring you something amazing. Stay tuned!
           </p>
-          <div className="h-2" />
-          <form onSubmit={handleSubmit} className="flex items-center gap-4">
+          
+          <form
+            onSubmit={handleSubmit}
+            className="flex items-center gap-4 px-8 pt-1"
+          >
             <Input
               type="email"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-white placeholder-gray-500"
+              className="bg-white placeholder:text-gray"
               required
             />
-            <Button type="submit">Notify Me</Button>
+            <Button type="submit" size="lg">
+              Notify Me
+            </Button>
           </form>
         </div>
       </CardMain>

@@ -3,6 +3,7 @@ import AuthProvider from '@/components/AuthProvider';
 import Navbar from '@/app/irlsocialclub/navbar';
 import '@/css/globals.css';
 import { ShellHeader } from '@/shell/header';
+import { IrlsocialclubNavTitle } from '@/app/irlsocialclub/navbar/title';
 
 export default function RootLayout({
   children
@@ -11,7 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <AuthProvider>
-      <ShellHeader>
+      <ShellHeader title={<IrlsocialclubNavTitle />}>
         <Navbar />
       </ShellHeader>
       {children}

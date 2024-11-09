@@ -1,8 +1,9 @@
-'use client';;
+'use client';
 import { useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { CheckboxText } from '@/components/ui/checkbox/text';
+import { CardMain } from '@/components/ui/card/main';
 
 export default function Component() {
   const [availability, setAvailability] = useState('');
@@ -71,15 +72,17 @@ export default function Component() {
 
   if (isSubmitted) {
     return (
-      <div className="container mx-auto p-4 text-center">
-        <h1 className="text-2xl font-bold mb-4">Thank you!</h1>
-        <p className="text-lg">We&apos;ll be in touch!</p>
-      </div>
+      <CardMain>
+        <div className="p-8 gap-2 flex flex-col items-center justify-center">
+          <h1 className="text-2xl font-bold mb-4">Thank you</h1>
+          <p className="text-lg">We&apos;ll be in touch!</p>
+        </div>
+      </CardMain>
     );
   }
 
   return (
-    <div className="relative container mx-auto p-4 my-12">
+    <div className="relative container mx-auto p-8 my-12">
       <div className="absolute inset-0 bg-background rounded-xl" />
       <div className="relative text-black">
         <h1 className="text-2xl font-bold mb-4">Curated</h1>
@@ -103,13 +106,13 @@ export default function Component() {
               className="w-full"
             />
           </div>
-          <div>
-            <h2 className="text-lg font-semibold mb-2">
+          <div className="flex flex-col space-y-2">
+            <h2 className="text-lg font-semibold">
               Select activities that sound fun:
             </h2>
-            <div className="space-y-6">
+            <div className="flex flex-col gap-2">
               {activities.map((activity) => (
-                <div key={activity.id} className="space-y-2">
+                <div key={activity.id} className="relative flex flex-col gap-1">
                   {activity.isCategory ? (
                     <h3 className="text-md font-medium">{activity.label}</h3>
                   ) : (
@@ -128,7 +131,7 @@ export default function Component() {
                       {activity.children.map((child) => (
                         <div
                           key={child.id}
-                          className="flex items-center space-x-2"
+                          className="relative flex flex-wrap gap-4"
                         >
                           <CheckboxText
                             id={child.id}
@@ -161,7 +164,7 @@ export default function Component() {
               {meetingPreferences.map((preference) => (
                 <div
                   key={preference.id}
-                  className="flex items-center space-x-2"
+                  className="relative flex flex-wrap gap-4"
                 >
                   <CheckboxText
                     id={preference.id}
